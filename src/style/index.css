@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap");
+
+:root {
+	/* modular scale */
+	--ratio: 1.5;
+	--s-5: calc(var(--s-4) / var(--ratio));
+	--s-4: calc(var(--s-3) / var(--ratio));
+	--s-3: calc(var(--s-2) / var(--ratio));
+	--s-2: calc(var(--s-1) / var(--ratio));
+	--s-1: calc(var(--s0) / var(--ratio));
+	--s0: 1rem;
+	--s1: calc(var(--s0) * var(--ratio));
+	--s2: calc(var(--s1) * var(--ratio));
+	--s3: calc(var(--s2) * var(--ratio));
+	--s4: calc(var(--s3) * var(--ratio));
+	--s5: calc(var(--s4) * var(--ratio));
+
+	--color-light: #fff;
+	--color-dark: #000;
+	--background-light: #EDF0F3;
+	--border-thin: 0.25ch;
+	--nav-height: 5rem;
+	--sidebar-width: 10rem;
+
+	--gap-narrow: .27ch;
+	--measure: 70ch;
+
+	box-sizing: border-box;
+	border-color: solid var(--color-dark);
+
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	background-color: var(--background-light);
+}
+
+#app {
+	height: 100%;
+}
+
+switcher-l {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+switcher-l>* {
+	flex-basis: calc((var(--measure) - 100%) * 999);
+	flex-grow: 1;
+}
+
+sidebar-l {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+stack-l {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+stack-l>*+* {
+	margin-block-start: var(--s1);
+}
+
+box-l {
+	display: block;
+	padding: var(--s1);
+	border-width: var(--border-thin);
+	outline: var(--border-thin) solid transparent;
+	outline-offset: calc(var(--border-thin) * -1);
+	background-color: var(--color-light) !important;
+}
+
+center-l {
+	--center: 60ch;
+	display: block;
+	box-sizing: content-box;
+	margin-inline: auto;
+	max-inline-size: var(--measure);
+}
+
+sidebar-l.body-wrapper {
+	height: 100%;
+	display: flex;
+}
+
+sidebar-l.body-wrapper>*:last-child {
+	margin-inline-end: var(--s1);
+	margin-block: var(--s1);
+}
+
+stack-l.side-nav>* {
+	flex-grow: 1;
+}
+
+cluster-l {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
