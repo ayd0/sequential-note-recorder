@@ -49,6 +49,8 @@ body {
 
 #app {
 	height: 100%;
+	display: flex;
+	flex-flow: column;
 }
 
 switcher-l {
@@ -112,4 +114,67 @@ cluster-l {
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	align-items: flex-start;
+}
+
+/* Utility Classes */
+.sidebar-style\:main {
+	height: calc(100% - var(--nav-height) - .8ch);
+	margin-block-start: var(--border-thin)
+}
+
+.stack-style\:nav-drawer>* {
+	flex-grow: 1;
+}
+
+.stack-style\:nav-drawer>*:first-child {
+	width: var(--sidebar-width);
+}
+
+.stack-style\:widget-container {
+	display: flex;
+	flex-flow: column;
+	overflow: hidden;
+}
+
+.stack-style\:widget-container>*+* {
+	flex-grow: 1;
+}
+
+.box-style\:nav {
+	height: var(--nav-height);
+}
+
+.scroll\:auto {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.block-padding\:none {
+	padding-block: 0;
+}
+
+/* ID styles */
+#nav-drawer-container {
+	height: 100%;
+	display: flex;
+}
+
+#body-content-container {
+	height: calc(100% - var(--s1) * 2);
+	margin: var(--s1);
+}
+
+#body-content-container>* {
+	height: 100%;
+}
+
+#timer-container {
+	height: 100%;
+	padding-block: 0;
+	overflow: hidden;
+	padding-inline: 0;
+}
+
+#timer-container>* {
+	height: 100%;
 }
