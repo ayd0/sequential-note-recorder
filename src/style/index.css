@@ -144,6 +144,10 @@ cluster-l {
 	height: var(--nav-height);
 }
 
+.box-style\:content {
+	padding-block: 0 !important;
+}
+
 .scroll\:auto {
 	height: 100%;
 	overflow-y: auto;

@@ -49,11 +49,11 @@ const App = () => {
                                 class="stack-style:widget-container"
                                 space="var(--border-thin)"
                             >
-                                <box-l></box-l>
-                                <box-l></box-l>
-                                <box-l></box-l>
+                                <box-l padBlock="0"><h1>Study</h1></box-l>
+                                <box-l padBlock="0"><h1>Session</h1></box-l>
+                                <box-l padBlock="0"><h1>Chart: Pomodoro</h1></box-l>
                             </stack-l>
-                            <box-l style="padding-block: 0; flex-grow: 1">
+                            <box-l padBlock="0" style="flex-grow: 1">
                                 <h1>Steps</h1>
                             </box-l>
                         </sidebar-l>

@@ -4,13 +4,14 @@
  * A custom element for generic boxes/containers
  * @property {string} padding=var(--s1) A CSS `padding` value
  * @property {string} borderWidth=var(--border-thin) A CSS `border-width` value
+ * @property {string} padBox=this.getAttribute(padding) A CSS `padding-box` value
  * @property {boolean} invert=false Whether to apply an inverted theme. Only recommended for greyscale designs.
  */
 export default class Box extends HTMLElement {
     constructor() {
         super();
         this.render = () => {
-            this.i = `Box-${[this.padding, this.borderWidth, this.invert].join(
+            this.i = `Box-${[this.padding, this.borderWidth, this.padBlock, this.invert].join(
                 ""
             )}`;
             this.dataset.i = this.i;
@@ -21,6 +22,7 @@ export default class Box extends HTMLElement {
             [data-i="${this.i}"] {
               padding: ${this.padding};
               border: ${this.borderWidth} solid;
+              padding-block: ${this.padBlock};
               ${
                   this.invert
                       ? `background-color: var(--color-light);
@@ -52,8 +54,16 @@ export default class Box extends HTMLElement {
         return this.setAttribute("borderWidth", val);
     }
 
+    get padBlock() {
+        return this.getAttribute("padBlock" || this.getAttribute("padding"))
+    }
+
+    set padBox(val) {
+        return this.setAttribute("padBlock", val)
+    }
+
     static get observedAttributes() {
-        return ["borderWidth", "padding", "invert"];
+        return ["padBox", "borderWidth", "padding", "invert"];
     }
 
     get invert() {
