@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap");
 
 :root {
-	/* modular scale */
+	/* Modular Scale */
 	--ratio: 1.5;
 	--s-5: calc(var(--s-4) / var(--ratio));
 	--s-4: calc(var(--s-3) / var(--ratio));
@@ -19,25 +19,21 @@
 	--color-dark: #000;
 	--background-light: #EDF0F3;
 	--border-thin: 0.25ch;
+	--box-rounded: 1ch;
 	--nav-height: 5rem;
-	--sidebar-width: 10rem;
+	--sidebar-width: 12rem;
 
 	--gap-narrow: .27ch;
 	--measure: 70ch;
 
-	box-sizing: border-box;
 	border-color: solid var(--color-dark);
 
 	font-family: 'Roboto', sans-serif;
 	font-weight: 400;
 }
 
-h1,
-h2,
-h3,
-h4 {
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
+* {
+	box-sizing: border-box;
 }
 
 html,
@@ -53,6 +49,15 @@ body {
 	flex-flow: column;
 }
 
+h1,
+h2,
+h3,
+h4 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+}
+
+/* Web Component Styles */
 switcher-l {
 	display: flex;
 	flex-wrap: wrap;
@@ -116,6 +121,20 @@ cluster-l {
 	align-items: flex-start;
 }
 
+icon-l svg {
+  height: 0.75em;
+  height: 1cap;
+  width: 0.75em;
+  width: 1cap;
+}
+
+.small {
+	font-size: 0.75em;
+}
+
+.big {
+	font-size: 1.25em;
+}
 /* Utility Classes */
 .sidebar-style\:main {
 	height: calc(100% - var(--nav-height) - .8ch);
@@ -157,7 +176,11 @@ cluster-l {
 	padding-block: 0;
 }
 
-/* ID styles */
+.rounded-container > * {
+	border-radius: var(--box-rounded)
+}
+
+/* ID Styles */
 #nav-drawer-container {
 	height: 100%;
 	display: flex;
@@ -177,8 +200,14 @@ cluster-l {
 	padding-block: 0;
 	overflow: hidden;
 	padding-inline: 0;
+	border-radius: var(--box-rounded);
 }
 
 #timer-container>* {
 	height: 100%;
+}
+
+#search-container {
+	flex: 0 1 14rem;
+	display: flex;
 }

@@ -1,17 +1,25 @@
 import { Router } from "preact-router";
+import { ReactSVG } from "react-svg";
 
 import {} from "./web-components/layout-components";
 
 const App = () => {
     return (
         <div id="app">
-            <switcher-l space="var(--border-thin);">
+            <switcher-l space="var(--border-thin);" threshold="30rem">
                 <box-l class="box-style:nav" padding="var(--s-5)">
-                    <h2>1</h2>
+                    <div style="display: flex; align-items: center; width: 100%:">
+                        <ReactSVG
+                            src="../assets/icons/step-over.svg"
+                            style="opacity: 80%; margin-inline-end: 2ch"
+                        />
+                        <div id="search-container">
+                            <input style="flex-grow: 1;"></input>
+                            <button>Test</button>
+                        </div>
+                    </div>
                 </box-l>
-                <box-l class="box-style:nav" padding="var(--s-5)">
-                    <h2>2</h2>
-                </box-l>
+                <box-l class="box-style:nav" padding="var(--s-5)"></box-l>
             </switcher-l>
             <sidebar-l contentMin="0%" space="0" class="sidebar-style:main">
                 <div id="nav-drawer-container">
@@ -20,14 +28,10 @@ const App = () => {
                         space="var(--border-thin)"
                     >
                         <box-l>
-                            <stack-l>
-                                <h4>Test</h4>
-                            </stack-l>
+                            <stack-l>Test</stack-l>
                         </box-l>
                         <box-l>
-                            <stack-l>
-                                <h4>Test</h4>
-                            </stack-l>
+                            <stack-l></stack-l>
                         </box-l>
                     </stack-l>
                 </div>
@@ -39,19 +43,27 @@ const App = () => {
                         sideWidth="calc(10rem + 2 * var(--s1))"
                     >
                         <sidebar-l
-                            class="scroll:auto"
+                            class="scroll:auto rounded-container"
                             side="right"
                             contentMin="47.5%"
                             space="var(--border-thin)"
                             sideWidth="43%"
                         >
                             <stack-l
-                                class="stack-style:widget-container"
+                                class="stack-style:widget-container rounded-container"
                                 space="var(--border-thin)"
                             >
-                                <box-l padBlock="0"><h1>Study</h1></box-l>
-                                <box-l padBlock="0"><h1>Session</h1></box-l>
-                                <box-l padBlock="0"><h1>Chart: Pomodoro</h1></box-l>
+                                <box-l padBlock="0" style="display: flex;">
+                                    <h1>Study</h1>
+                                </box-l>
+                                <box-l padBlock="0">
+                                    <h1 style="margin-block-end: var(--s-5);">
+                                        Session
+                                    </h1>
+                                </box-l>
+                                <box-l padBlock="0">
+                                    <h1>Chart: Pomodoro</h1>
+                                </box-l>
                             </stack-l>
                             <box-l padBlock="0" style="flex-grow: 1">
                                 <h1>Steps</h1>
