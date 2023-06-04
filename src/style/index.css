@@ -23,6 +23,7 @@
 	--box-rounded: 1ch;
 	--nav-height: 4rem;
 	--sidebar-width: 12rem;
+	--input-height-narrow: 3.5ch;
 
 	--gap-narrow: .27ch;
 	--measure: 70ch;
@@ -187,7 +188,7 @@ icon-l svg {
 	border-radius: var(--box-rounded)
 }
 
-.fade-all > * {
+.fade-all>* {
 	opacity: 80%;
 }
 
@@ -256,4 +257,37 @@ icon-l svg {
 
 #search-container>button:hover {
 	cursor: pointer;
+}
+
+#action-bar {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	flex-grow: 1;
+	overflow-x: auto;
+}
+
+#action-bar>div:first-of-type {
+	border-inline-end: var(--border-thin) solid var(--background-light);
+}
+
+#action-bar>input {
+	flex-grow: 1;
+	height: var(--input-height-narrow);
+	margin-inline-start: var(--s0);
+	margin-inline-end: var(--s-3);
+	padding-inline-start: var(--s0);
+	border: none;
+	background: var(--background-light);
+	border-radius: .75ch;
+}
+
+#action-bar>input:focus,
+#action-bar>input:active {
+	outline: none;
+}
+
+#action-bar>input:focus::placeholder,
+#action-bar>input:active::placeholder {
+	color: transparent;
 }

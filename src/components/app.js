@@ -55,21 +55,34 @@ const App = () => {
                         side="right"
                         contentMin="0%"
                         space="var(--border-thin)"
-                        sideWidth="calc(10rem + 2 * var(--s1))"
+                        sideWidth="calc(8rem + 2 * var(--s1))"
                     >
                         <sidebar-l
                             class="scroll:auto rounded-container"
                             side="right"
                             contentMin="47.5%"
                             space="var(--border-thin)"
-                            sideWidth="43%"
+                            sideWidth="45%"
                         >
                             <stack-l
                                 class="stack-style:widget-container rounded-container"
                                 space="var(--border-thin)"
                             >
                                 <box-l padBlock="0" style="display: flex;">
-                                    <h1>Study</h1>
+                                    <div id="action-bar">
+                                        <div>
+                                            <h1 style="display: flex;">
+                                                Study
+                                                <icon-l>
+                                                    <ReactSVG src="../assets/icons/arrow_drop_down.svg" />
+                                                </icon-l>
+                                            </h1>
+                                        </div>
+                                        <input placeholder="Enter name of subject..."></input>
+                                        <ReactSVG src="../assets/icons/play.svg" />
+                                        <ReactSVG src="../assets/icons/pause.svg" />
+                                        <ReactSVG src="../assets/icons/stop.svg" />
+                                    </div>
                                 </box-l>
                                 <box-l padBlock="0">
                                     <h1 style="margin-block-end: var(--s-5);">
