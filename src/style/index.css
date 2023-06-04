@@ -17,10 +17,11 @@
 
 	--color-light: #fff;
 	--color-dark: #000;
+	--color-contrast: #9f9f9f;
 	--background-light: #EDF0F3;
 	--border-thin: 0.25ch;
 	--box-rounded: 1ch;
-	--nav-height: 5rem;
+	--nav-height: 4rem;
 	--sidebar-width: 12rem;
 
 	--gap-narrow: .27ch;
@@ -55,6 +56,11 @@ h3,
 h4 {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
+	opacity: 80%;
+}
+
+p {
+	opacity: 80%
 }
 
 /* Web Component Styles */
@@ -122,10 +128,10 @@ cluster-l {
 }
 
 icon-l svg {
-  height: 0.75em;
-  height: 1cap;
-  width: 0.75em;
-  width: 1cap;
+	height: 0.75em;
+	height: 1cap;
+	width: 0.75em;
+	width: 1cap;
 }
 
 .small {
@@ -135,6 +141,7 @@ icon-l svg {
 .big {
 	font-size: 1.25em;
 }
+
 /* Utility Classes */
 .sidebar-style\:main {
 	height: calc(100% - var(--nav-height) - .8ch);
@@ -176,8 +183,12 @@ icon-l svg {
 	padding-block: 0;
 }
 
-.rounded-container > * {
+.rounded-container>* {
 	border-radius: var(--box-rounded)
+}
+
+.fade-all > * {
+	opacity: 80%;
 }
 
 /* ID Styles */
@@ -208,6 +219,41 @@ icon-l svg {
 }
 
 #search-container {
-	flex: 0 1 14rem;
+	flex: 0 1 18rem;
 	display: flex;
+	background-color: var(--background-light);
+	height: 2.75ch;
+	border-radius: .75ch;
+	padding-inline-start: var(--s-2);
+	padding-block-start: var(--s-5);
+}
+
+#search-container>input {
+	flex-grow: 1;
+	border: none;
+	background-color: var(--background-light);
+	border-radius: .75ch;
+	padding-inline-start: var(--s-4);
+}
+
+#search-container>input:focus,
+#search-container>input:active {
+	outline: none;
+}
+
+#search-container>input:focus::placeholder,
+#search-container>input:active::placeholder {
+	color: transparent;
+}
+
+#search-container>button {
+	width: 8ch;
+	border: var(--s-5) solid var(--background-light);
+	border-top: none;
+	background-color: #fff;
+	border-radius: 0 .75ch .75ch 0;
+}
+
+#search-container>button:hover {
+	cursor: pointer;
 }
