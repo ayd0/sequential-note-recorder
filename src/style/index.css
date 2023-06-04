@@ -2,7 +2,7 @@
 
 :root {
 	/* Modular Scale */
-	--ratio: 1.5;
+	--ratio: 1.618;
 	--s-5: calc(var(--s-4) / var(--ratio));
 	--s-4: calc(var(--s-3) / var(--ratio));
 	--s-3: calc(var(--s-2) / var(--ratio));
@@ -18,12 +18,16 @@
 	--color-light: #fff;
 	--color-dark: #000;
 	--color-contrast: #9f9f9f;
-	--background-light: #EDF0F3;
+	--background-light: #edf0f3;
 	--border-thin: 0.25ch;
 	--box-rounded: 1ch;
 	--nav-height: 4rem;
 	--sidebar-width: 12rem;
 	--input-height-narrow: 3.5ch;
+	--icon-inactive: #a7a7a7;
+	--btn-color-add: #1ab82a;
+	--btn-color-clear: #d0d25c;
+	--btn-color-delete: #d13c1b;
 
 	--gap-narrow: .27ch;
 	--measure: 70ch;
@@ -184,12 +188,104 @@ icon-l svg {
 	padding-block: 0;
 }
 
+.narrow-input {
+	height: var(--input-height-narrow);
+	border: none;
+	background: var(--background-light);
+	border-radius: .75ch;
+	padding-inline-start: var(--s0);
+}
+
+.narrow-input:focus,
+.narrow-input:active,
+.step-input:focus,
+.step-input:active {
+	outline: none;
+}
+
+.narrow-input:focus::placeholder,
+.narrow-input:active::placeholder,
+.step-input:focus::placeholder {
+	color: transparent;
+}
+
+.step-input {
+	flex-grow: 1;
+	height: var(--s5);
+	border: none;
+	background: var(--background-light);
+	border-radius: .75ch;
+	resize: vertical;
+	margin-block-end: var(--s0);
+	padding: var(--s-1);
+}
+
 .rounded-container>* {
 	border-radius: var(--box-rounded)
 }
 
 .fade-all>* {
 	opacity: 80%;
+}
+
+.step-entry\:open {
+	padding-inline: var(--s1);
+	display: flex;
+	flex-flow: column;
+	border-block-end: var(--border-thin) solid var(--background-light);
+	margin-block-end: var(--s1)
+}
+
+.step-entry\:closed {
+	padding-inline: var(--s1);
+}
+
+.step-header {
+	display: flex;
+	align-items: center;
+	margin-block-start: var(--s-5)
+}
+
+.step-entry\:open>.step-header>button:first-of-type,
+.step-entry\:edit>.step-header>button:first-of-type {
+	margin-inline-start: auto;
+}
+
+.step-entry\:open>.step-header>button:last-of-type,
+.step-entry\:edit>.step-header>button:last-of-type {
+	margin-inline-end: var(--s-4);
+}
+
+.step-entry\:open>.step-header>button+button,
+.step-entry\:edit>.step-header>button+button {
+	margin-inline-start: var(--s-1)
+}
+
+.step-button-add {
+	background: #fff;
+	border-color: var(--btn-color-add);
+	color: var(--btn-color-add);
+	border-radius: .75ch;
+	font-size: 1.1em;
+	padding-inline: var(--s0)
+}
+
+.step-button-clear {
+	background: #fff;
+	border-color: var(--btn-color-clear);
+	color: var(--btn-color-clear);
+	border-radius: .75ch;
+	font-size: 1.1em;
+	padding-inline: var(--s0)
+}
+
+.step-button-delete {
+	background: #fff;
+	border-color: var(--btn-color-delete);
+	color: var(--btn-color-delete);
+	border-radius: .75ch;
+	font-size: 1.1em;
+	padding-inline: var(--s0)
 }
 
 /* ID Styles */
@@ -231,20 +327,8 @@ icon-l svg {
 
 #search-container>input {
 	flex-grow: 1;
-	border: none;
-	background-color: var(--background-light);
-	border-radius: .75ch;
 	padding-inline-start: var(--s-4);
-}
-
-#search-container>input:focus,
-#search-container>input:active {
-	outline: none;
-}
-
-#search-container>input:focus::placeholder,
-#search-container>input:active::placeholder {
-	color: transparent;
+	height: auto;
 }
 
 #search-container>button {
@@ -273,21 +357,22 @@ icon-l svg {
 
 #action-bar>input {
 	flex-grow: 1;
-	height: var(--input-height-narrow);
 	margin-inline-start: var(--s0);
 	margin-inline-end: var(--s-3);
-	padding-inline-start: var(--s0);
-	border: none;
-	background: var(--background-light);
-	border-radius: .75ch;
 }
 
-#action-bar>input:focus,
-#action-bar>input:active {
-	outline: none;
+#step-container {
+    flex-grow: 1
 }
 
-#action-bar>input:focus::placeholder,
-#action-bar>input:active::placeholder {
-	color: transparent;
+#step-action-bar {
+	display: flex;
+	flex-flow: column;
+	padding-inline: var(--s1);
+	border-bottom: var(--border-thin) solid var(--background-light);
+	padding-block-end: var(--s1);
+}
+
+#step-action-bar>h1 {
+	margin-block-end: var(--s-1)
 }
