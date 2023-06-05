@@ -288,6 +288,20 @@ icon-l svg {
 	padding-inline: var(--s0)
 }
 
+.nav-drawer > p {
+	display: flex;
+	align-items: center;
+}
+
+.nav-drawer > p + p {
+	margin-block-start: 0;
+}
+
+.nav-drawer > p > icon-l {
+	font-size: 2em;
+	padding-inline-end: var(--s-2);
+}
+
 /* ID Styles */
 #nav-drawer-container {
 	height: 100%;

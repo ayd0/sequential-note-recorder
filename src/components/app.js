@@ -46,11 +46,43 @@ const App = () => {
                         class="stack-style:nav-drawer"
                         space="var(--border-thin)"
                     >
-                        <box-l>
-                            <stack-l>Test</stack-l>
+                        <box-l padBlock="var(--s0)">
+                            <stack-l class="nav-drawer">
+                                <p>
+                                    <icon-l>
+                                        <ReactSVG src="../assets/icons/dashboard.svg" />
+                                    </icon-l>
+                                    Workspace
+                                </p>
+                                <p style="margin-inline-start: var(--s-4);">
+                                    <icon-l>
+                                        <ReactSVG src="../assets/icons/overview.svg" />
+                                    </icon-l>
+                                    Overview
+                                </p>
+                                <p>
+                                    <icon-l>
+                                        <ReactSVG src="../assets/icons/chart.svg" />
+                                    </icon-l>
+                                    Charts
+                                </p>
+                            </stack-l>
                         </box-l>
                         <box-l>
-                            <stack-l></stack-l>
+                            <stack-l class="nav-drawer">
+                                <p>
+                                    <icon-l>
+                                        <ReactSVG src="../assets/icons/documents.svg" />
+                                    </icon-l>
+                                    Docs
+                                </p>
+                                <p>
+                                    <icon-l>
+                                        <ReactSVG src="../assets/icons/forum.svg" />
+                                    </icon-l>
+                                    Contact
+                                </p>
+                            </stack-l>
                         </box-l>
                     </stack-l>
                 </div>
@@ -100,11 +132,7 @@ const App = () => {
                                     <h1>Chart: Pomodoro</h1>
                                 </box-l>
                             </stack-l>
-                            <box-l
-                                id="step-container"
-                                padBlock="0"
-                                padding="0"
-                            >
+                            <box-l id="step-container" padBlock="0" padding="0">
                                 <div id="step-action-bar">
                                     <h1>Steps</h1>
                                     <div style="display: flex; align-items: center;">
@@ -139,8 +167,12 @@ const App = () => {
                                                 src="../assets/icons/add-link.svg"
                                             />
                                         </icon-l>
-                                        <button class="step-button-clear">Clear</button>
-                                        <button class="step-button-add">Add</button>
+                                        <button class="step-button-clear">
+                                            Clear
+                                        </button>
+                                        <button class="step-button-add">
+                                            Add
+                                        </button>
                                     </p>
                                     <textarea
                                         class="step-input"
@@ -214,9 +246,15 @@ const App = () => {
                                                 src="../assets/icons/add-link.svg"
                                             />
                                         </icon-l>
-                                        <button class="step-button-delete">Delete</button>
-                                        <button class="step-button-clear">Clear</button>
-                                        <button class="step-button-add">Done</button>
+                                        <button class="step-button-delete">
+                                            Delete
+                                        </button>
+                                        <button class="step-button-clear">
+                                            Clear
+                                        </button>
+                                        <button class="step-button-add">
+                                            Done
+                                        </button>
                                     </p>
                                     <textarea
                                         class="step-input"
