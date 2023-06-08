@@ -48,7 +48,7 @@ const App = () => {
                     >
                         <box-l padBlock="var(--s0)">
                             <stack-l class="nav-drawer">
-                                <p style="font-size: .9em;">
+                                <p>
                                     <icon-l>
                                         <ReactSVG src="../assets/icons/dashboard.svg" />
                                     </icon-l>
@@ -147,60 +147,41 @@ const App = () => {
                                     </div>
                                 </div>
                                 <div class="step-entry:open">
-                                    <p class="step-header">
-                                        Step 1
-                                        <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
-                                            <ReactSVG
-                                                style="font-size: 2.5em; opacity: 50%;"
-                                                src="../assets/icons/add-comment.svg"
-                                            />
-                                        </icon-l>
-                                        <icon-l>
-                                            <ReactSVG
-                                                style="font-size: 2.5em"
-                                                src="../assets/icons/code-block.svg"
-                                            />
-                                        </icon-l>
-                                        <icon-l>
-                                            <ReactSVG
-                                                style="font-size: 2.5em; opacity: 50%;"
-                                                src="../assets/icons/add-link.svg"
-                                            />
-                                        </icon-l>
-                                        <button class="step-button-clear">
-                                            Clear
-                                        </button>
-                                        <button class="step-button-add">
-                                            Add
-                                        </button>
-                                    </p>
+                                    <switcher-l style="align-items: center" threshold="1rem" space="var(--border-thin)">
+                                        <p class="step-header">
+                                            Step 4
+                                            <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
+                                                <ReactSVG
+                                                    style="font-size: 2.5em; opacity: 50%;"
+                                                    src="../assets/icons/add-comment.svg"
+                                                />
+                                            </icon-l>
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 2.5em"
+                                                    src="../assets/icons/code-block.svg"
+                                                />
+                                            </icon-l>
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 2.5em; opacity: 50%;"
+                                                    src="../assets/icons/add-link.svg"
+                                                />
+                                            </icon-l>
+                                        </p>
+                                        <div class="step-button-group">
+                                            <button class="step-button-clear">
+                                                Clear
+                                            </button>
+                                            <button class="step-button-add">
+                                                Done
+                                            </button>
+                                        </div>
+                                    </switcher-l>
                                     <textarea
                                         class="step-input"
                                         placeholder="Write code here..."
                                     ></textarea>
-                                </div>
-                                <div class="step-entry:closed">
-                                    <p class="step-header">
-                                        Step 2
-                                        <icon-l style="margin-inline-start: var(--s0); padding-block-start: var(--s-5);">
-                                            <ReactSVG
-                                                style="font-size: 2em;"
-                                                src="../assets/icons/edit.svg"
-                                            />
-                                        </icon-l>
-                                        <icon-l>
-                                            <ReactSVG
-                                                style="font-size: 2em"
-                                                src="../assets/icons/delete.svg"
-                                            />
-                                        </icon-l>
-                                        <icon-l>
-                                            <ReactSVG
-                                                style="font-size: 2em;"
-                                                src="../assets/icons/link.svg"
-                                            />
-                                        </icon-l>
-                                    </p>
                                 </div>
                                 <div class="step-entry:closed">
                                     <p class="step-header">
@@ -225,37 +206,64 @@ const App = () => {
                                         </icon-l>
                                     </p>
                                 </div>
-                                <div class="step-entry:open">
+                                <div class="step-entry:closed">
                                     <p class="step-header">
-                                        Step 1
-                                        <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
+                                        Step 2
+                                        <icon-l style="margin-inline-start: var(--s0); padding-block-start: var(--s-5);">
                                             <ReactSVG
-                                                style="font-size: 2.5em; opacity: 50%;"
-                                                src="../assets/icons/add-comment.svg"
+                                                style="font-size: 2em;"
+                                                src="../assets/icons/edit.svg"
                                             />
                                         </icon-l>
                                         <icon-l>
                                             <ReactSVG
-                                                style="font-size: 2.5em"
-                                                src="../assets/icons/code-block.svg"
+                                                style="font-size: 2em"
+                                                src="../assets/icons/delete.svg"
                                             />
                                         </icon-l>
                                         <icon-l>
                                             <ReactSVG
-                                                style="font-size: 2.5em; opacity: 50%;"
-                                                src="../assets/icons/add-link.svg"
+                                                style="font-size: 2em;"
+                                                src="../assets/icons/link.svg"
                                             />
                                         </icon-l>
-                                        <button class="step-button-delete">
-                                            Delete
-                                        </button>
-                                        <button class="step-button-clear">
-                                            Clear
-                                        </button>
-                                        <button class="step-button-add">
-                                            Done
-                                        </button>
                                     </p>
+                                </div>
+                                <div class="step-entry:open">
+                                    <switcher-l style="align-items: center" threshold="1rem" space="var(--border-thin)">
+                                        <p class="step-header">
+                                            Step 1
+                                            <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
+                                                <ReactSVG
+                                                    style="font-size: 2.5em; opacity: 50%;"
+                                                    src="../assets/icons/add-comment.svg"
+                                                />
+                                            </icon-l>
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 2.5em"
+                                                    src="../assets/icons/code-block.svg"
+                                                />
+                                            </icon-l>
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 2.5em; opacity: 50%;"
+                                                    src="../assets/icons/add-link.svg"
+                                                />
+                                            </icon-l>
+                                        </p>
+                                        <div class="step-button-group">
+                                            <button class="step-button-delete">
+                                                Delete
+                                            </button>
+                                            <button class="step-button-clear">
+                                                Clear
+                                            </button>
+                                            <button class="step-button-add">
+                                                Done
+                                            </button>
+                                        </div>
+                                    </switcher-l>
                                     <textarea
                                         class="step-input"
                                         placeholder="Write code here..."

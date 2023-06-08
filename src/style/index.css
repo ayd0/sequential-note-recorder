@@ -65,7 +65,8 @@ h4 {
 }
 
 p {
-	opacity: 80%
+	opacity: 80%;
+	font-size: 0.9em;
 }
 
 /* Web Component Styles */
@@ -211,7 +212,7 @@ icon-l svg {
 
 .step-input {
 	flex-grow: 1;
-	height: var(--s5);
+	height: var(--s4);
 	border: none;
 	background: var(--background-light);
 	border-radius: .75ch;
@@ -246,16 +247,22 @@ icon-l svg {
 	margin-block-start: var(--s-5)
 }
 
-.step-entry\:open>.step-header>button:first-of-type {
+.step-button-group {
+	display: flex;
+	flex-grow: 1;
+	gap: var(--s-1);
+}
+
+.step-button-group {
+	max-height: 3ch;
+}
+
+.step-button-group>button:first-of-type {
 	margin-inline-start: auto;
 }
 
-.step-entry\:open>.step-header>button:last-of-type {
+.step-button-group>button:last-of-type {
 	margin-inline-end: var(--s-4);
-}
-
-.step-entry\:open>.step-header>button+button {
-	margin-inline-start: var(--s-1)
 }
 
 .step-button-add {
