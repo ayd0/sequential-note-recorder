@@ -246,18 +246,15 @@ icon-l svg {
 	margin-block-start: var(--s-5)
 }
 
-.step-entry\:open>.step-header>button:first-of-type,
-.step-entry\:edit>.step-header>button:first-of-type {
+.step-entry\:open>.step-header>button:first-of-type {
 	margin-inline-start: auto;
 }
 
-.step-entry\:open>.step-header>button:last-of-type,
-.step-entry\:edit>.step-header>button:last-of-type {
+.step-entry\:open>.step-header>button:last-of-type {
 	margin-inline-end: var(--s-4);
 }
 
-.step-entry\:open>.step-header>button+button,
-.step-entry\:edit>.step-header>button+button {
+.step-entry\:open>.step-header>button+button {
 	margin-inline-start: var(--s-1)
 }
 

@@ -48,7 +48,7 @@ const App = () => {
                     >
                         <box-l padBlock="var(--s0)">
                             <stack-l class="nav-drawer">
-                                <p>
+                                <p style="font-size: .9em;">
                                     <icon-l>
                                         <ReactSVG src="../assets/icons/dashboard.svg" />
                                     </icon-l>
@@ -266,7 +266,17 @@ const App = () => {
                         <box-l id="timer-container">
                             <center-l andText>
                                 <h1>Pomodoro</h1>
-                                <stack-l class="scroll:auto"></stack-l>
+                                <stack-l class="scroll:auto">
+                                    <center-l>
+                                        <p style="display: flex;">
+                                            Study: 26:00
+                                            <icon-l style="margin-inline: 1ch;">
+                                                <ReactSVG src="../assets/icons/plus.svg" />
+                                            </icon-l>
+                                            1:00
+                                        </p>
+                                    </center-l>
+                                </stack-l>
                             </center-l>
                         </box-l>
                     </sidebar-l>
