@@ -237,6 +237,10 @@ icon-l svg {
 	margin-block-end: var(--s1)
 }
 
+.step-entry\:edit {
+	border-block-start: var(--border-thin) solid var(--background-light);
+}
+
 .step-entry\:closed {
 	padding-inline: var(--s1);
 }
