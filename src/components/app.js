@@ -91,14 +91,14 @@ const App = () => {
                         side="right"
                         contentMin="0%"
                         space="var(--border-thin)"
-                        sideWidth="calc(8rem + 2 * var(--s1))"
+                        sideWidth="calc(9rem + 2 * var(--s1))"
                     >
                         <sidebar-l
                             class="scroll:auto rounded-container"
                             side="right"
-                            contentMin="47.5%"
+                            contentMin="44.5%"
                             space="var(--border-thin)"
-                            sideWidth="45%"
+                            sideWidth="55%"
                         >
                             <stack-l
                                 class="stack-style:widget-container rounded-container"
@@ -147,7 +147,11 @@ const App = () => {
                                     </div>
                                 </div>
                                 <div class="step-entry:open">
-                                    <switcher-l style="align-items: center" threshold="1rem" space="var(--border-thin)">
+                                    <switcher-l
+                                        style="align-items: center"
+                                        threshold="1rem"
+                                        space="var(--border-thin)"
+                                    >
                                         <p class="step-header">
                                             Step 4
                                             <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
@@ -230,7 +234,11 @@ const App = () => {
                                     </p>
                                 </div>
                                 <div class="step-entry:open">
-                                    <switcher-l style="align-items: center" threshold="1rem" space="var(--border-thin)">
+                                    <switcher-l
+                                        style="align-items: center"
+                                        threshold="1rem"
+                                        space="var(--border-thin)"
+                                    >
                                         <p class="step-header">
                                             Step 1
                                             <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
@@ -274,16 +282,53 @@ const App = () => {
                         <box-l id="timer-container">
                             <center-l andText>
                                 <h1>Pomodoro</h1>
-                                <stack-l class="scroll:auto">
-                                    <center-l>
-                                        <p style="display: flex;">
-                                            Study: 26:00
-                                            <icon-l style="margin-inline: 1ch;">
-                                                <ReactSVG src="../assets/icons/plus.svg" />
+                                <stack-l
+                                    style="padding-inline: var(--s0)"
+                                    class="scroll:auto"
+                                    space="var(--s-5)"
+                                >
+                                    <div>
+                                        <p style="display: flex; align-items: center; margin-block-end: 0;">
+                                            Break{" "}
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 2.4em; padding-inline-start: var(--s-3); padding-block-start: var(--s-3);"
+                                                    src="../assets/icons/skip.svg"
+                                                />
                                             </icon-l>
-                                            1:00
                                         </p>
-                                    </center-l>
+                                        <p style="display: flex; align-items: center; margin-block-start: 0;">
+                                            00:25 / 15:00{" "}
+                                            <icon-l>
+                                                <ReactSVG
+                                                    style="font-size: 1.6em; padding-inline: var(--s-1); padding-block-start: var(--s-3);"
+                                                    src="../assets/icons/plus-minus.svg"
+                                                />
+                                            </icon-l>
+                                            2:00
+                                        </p>
+                                    </div>
+                                    <p style="display: flex;">
+                                        Study: 26:00
+                                        <icon-l style="margin-inline: 1ch;">
+                                            <ReactSVG src="../assets/icons/plus.svg" />
+                                        </icon-l>
+                                        1:00
+                                    </p>
+                                    <p style="display: flex;">
+                                        Break: 12:00
+                                        <icon-l style="margin-inline: 1ch;">
+                                            <ReactSVG src="../assets/icons/minus.svg" />
+                                        </icon-l>
+                                        3:00
+                                    </p>
+                                    <p style="display: flex;">
+                                        Break: 12:00
+                                        <icon-l style="margin-inline: 1ch;">
+                                            <ReactSVG src="../assets/icons/minus.svg" />
+                                        </icon-l>
+                                        3:00
+                                    </p>
                                 </stack-l>
                             </center-l>
                         </box-l>
