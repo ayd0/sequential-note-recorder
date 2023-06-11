@@ -19,11 +19,14 @@
 	--color-dark: #000;
 	--color-contrast: #9f9f9f;
 	--background-light: #edf0f3;
+	--background-dark: #0e0915;
+
 	--border-thin: 0.25ch;
 	--box-rounded: 1ch;
 	--nav-height: 4rem;
 	--sidebar-width: 12rem;
 	--input-height-narrow: 3.5ch;
+
 	--icon-inactive: #a7a7a7;
 	--btn-color-add: #1ab82a;
 	--btn-color-clear: #d0d25c;
@@ -31,8 +34,6 @@
 
 	--gap-narrow: .27ch;
 	--measure: 70ch;
-
-	border-color: solid var(--color-dark);
 
 	font-family: 'Roboto', sans-serif;
 	font-weight: 400;
@@ -248,7 +249,7 @@ icon-l svg {
 .step-header {
 	display: flex;
 	align-items: center;
-	margin-block-start: var(--s-5)
+	margin-block: var(--s-5)
 }
 
 .step-button-group {

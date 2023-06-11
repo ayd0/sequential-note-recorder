@@ -1,5 +1,4 @@
-import { Router } from "preact-router";
-import { ReactSVG } from "react-svg";
+import { Component } from "preact";
 
 import {} from "./web-components/layout-components";
 
@@ -12,44 +11,44 @@ import Session from "./widgets/Session";
 import Chart from "./widgets/Chart";
 import ActionBar from "./widgets/ActionBar";
 
-const App = () => {
-    return (
-        <div id="app">
-            <Navbar />
-            <sidebar-l contentMin="0%" space="0" class="sidebar-style:main">
-                <div id="nav-drawer-container">
-                    <NavDrawer />
-                </div>
-                <div id="body-content-container">
-                    <sidebar-l
-                        side="right"
-                        contentMin="0%"
-                        space="var(--border-thin)"
-                        sideWidth="calc(9rem + 2 * var(--s1))"
-                    >
+export default class App extends Component {
+    render() {
+        return (
+            <div id="app">
+                <Navbar />
+                <sidebar-l contentMin="0%" space="0" class="sidebar-style:main">
+                    <div id="nav-drawer-container">
+                        <NavDrawer />
+                    </div>
+                    <div id="body-content-container">
                         <sidebar-l
-                            class="scroll:auto rounded-container"
                             side="right"
-                            contentMin="44.5%"
+                            contentMin="0%"
                             space="var(--border-thin)"
-                            sideWidth="55%"
+                            sideWidth="calc(9rem + 2 * var(--s1))"
                         >
-                            <stack-l
-                                class="stack-style:widget-container rounded-container"
+                            <sidebar-l
+                                class="scroll:auto rounded-container"
+                                side="right"
+                                contentMin="44.5%"
                                 space="var(--border-thin)"
+                                sideWidth="55%"
                             >
-                                <ActionBar />
-                                <Session />
-                                <Chart />
-                            </stack-l>
-                            <Steps />
+                                <stack-l
+                                    class="stack-style:widget-container rounded-container"
+                                    space="var(--border-thin)"
+                                >
+                                    <ActionBar />
+                                    <Session />
+                                    <Chart />
+                                </stack-l>
+                                <Steps />
+                            </sidebar-l>
+                            <Timer />
                         </sidebar-l>
-                        <Timer />
-                    </sidebar-l>
-                </div>
-            </sidebar-l>
-        </div>
-    );
-};
-
-export default App;
+                    </div>
+                </sidebar-l>
+            </div>
+        );
+    }
+}
