@@ -2,6 +2,7 @@ import { Component } from "preact";
 import { ReactSVG } from "react-svg";
 
 export default class Steps extends Component {
+
     render() {
         return (
             <box-l id="step-container" padBlock="0" padding="0">

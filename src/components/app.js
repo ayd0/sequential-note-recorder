@@ -1,15 +1,17 @@
 import { Component } from "preact";
+import { createContext } from "preact";
+import { useContext } from "preact/hooks";
 
 import {} from "./web-components/layout-components";
 
-import Navbar from "./widgets/Navbar";
-import NavDrawer from "./widgets/NavDrawer";
+import Navbar from "./workspace/Navbar";
+import NavDrawer from "./workspace/NavDrawer";
 // @ts-ignore
-import Timer from "./widgets/Timer";
-import Steps from "./widgets/Steps";
-import Session from "./widgets/Session";
-import Chart from "./widgets/Chart";
-import ActionBar from "./widgets/ActionBar";
+import Timer from "./workspace/Timer";
+import Steps from "./workspace/steps/Steps";
+import Session from "./workspace/Session";
+import Chart from "./workspace/Chart";
+import ActionBar from "./workspace/ActionBar";
 
 export default class App extends Component {
     render() {
