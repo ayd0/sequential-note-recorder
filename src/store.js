@@ -1,7 +1,7 @@
-import createStepState from "./components/workspace/steps/stepsSlice";
+import createStepsState from "./components/workspace/steps/stepsSlice";
 
-const store = () => ({
-    steps: createStepState(),
+const createStore = () => ({
+    steps: createStepsState(),
 });
 
-export default store;
+export default createStore;

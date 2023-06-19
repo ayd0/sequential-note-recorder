@@ -1,11 +1,10 @@
 import { Component } from "preact";
-import store from "../store";
+import createStore from "../store";
 
 import {} from "./web-components/layout-components";
 
 import Navbar from "./workspace/Navbar";
 import NavDrawer from "./workspace/NavDrawer";
-// @ts-ignore
 import Timer from "./workspace/Timer";
 import Steps from "./workspace/steps/Steps";
 import Session from "./workspace/Session";
@@ -13,7 +12,7 @@ import Chart from "./workspace/Chart";
 import ActionBar from "./workspace/ActionBar";
 
 export default class App extends Component {
-    state = store();
+    state = createStore();
 
     render() {
         return (

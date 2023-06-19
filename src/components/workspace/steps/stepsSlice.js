@@ -1,11 +1,25 @@
 import { signal, computed } from "@preact/signals";
+// @ts-ignore
+import StepOpen from "./StepOpen";
 
-const createStepState = () => {
+const createStep = (stepName) => {
+    return {
+        status: "open",
+        name: stepName,
+        text: "",
+        code: "",
+        links: [],
+        component: <StepOpen />,
+    };
+};
+
+const createStepsState = () => {
     const stepList = signal([]);
+    const numSteps = computed(() => stepList.value.length + 1);
 
-    const numSteps = computed(() => stepList.value.length);
+    const addStep = (stepName) => (stepList.value = [...stepList.value, createStep(stepName)]);
 
-    return { stepList, numSteps };
-}
+    return { stepList, numSteps, addStep };
+};
 
-export default createStepState;
+export default createStepsState;
