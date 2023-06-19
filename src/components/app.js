@@ -1,6 +1,5 @@
 import { Component } from "preact";
-import { createContext } from "preact";
-import { useContext } from "preact/hooks";
+import store from "../store";
 
 import {} from "./web-components/layout-components";
 
@@ -14,6 +13,8 @@ import Chart from "./workspace/Chart";
 import ActionBar from "./workspace/ActionBar";
 
 export default class App extends Component {
+    state = store();
+
     render() {
         return (
             <div id="app">
@@ -44,7 +45,7 @@ export default class App extends Component {
                                     <Session />
                                     <Chart />
                                 </stack-l>
-                                <Steps />
+                                <Steps state={this.state.steps} />
                             </sidebar-l>
                             <Timer />
                         </sidebar-l>

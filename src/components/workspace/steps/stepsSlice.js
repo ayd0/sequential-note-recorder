@@ -1,11 +1,11 @@
 import { signal, computed } from "@preact/signals";
 
 const createStepState = () => {
-    const steps = signal([]);
+    const stepList = signal([]);
 
-    const numSteps = computed(() => steps.value.length);
+    const numSteps = computed(() => stepList.value.length);
 
-    return { steps, numSteps };
+    return { stepList, numSteps };
 }
 
 export default createStepState;

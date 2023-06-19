@@ -1,7 +1,7 @@
 import createStepState from "./components/workspace/steps/stepsSlice";
 
 const store = () => ({
-    steps: createStepState,
+    steps: createStepState(),
 });
 
 export default store;

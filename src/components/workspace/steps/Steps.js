@@ -3,7 +3,8 @@ import { ReactSVG } from "react-svg";
 
 export default class Steps extends Component {
 
-    render() {
+    render(state) {
+        const { stepList, numSteps } = state.state;
         return (
             <box-l id="step-container" padBlock="0" padding="0">
                 <div id="step-action-bar">
