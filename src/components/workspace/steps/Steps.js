@@ -6,9 +6,10 @@ export default class Steps extends Component {
     stepName = "";
 
     render(steps) {
-        const { stepList, numSteps, addStep, editStep } = steps.state;
+        const { stepList, numSteps, addStep, toggleStep, deleteStep } = steps.state;
         const stepOperations = {
-            editStep,
+            toggleStep,
+            deleteStep,
         };
 
         return (

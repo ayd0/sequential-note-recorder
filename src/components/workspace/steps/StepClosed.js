@@ -9,13 +9,14 @@ export default function stepClosed(props) {
                     <ReactSVG
                         style="font-size: 2em;"
                         src="../assets/icons/edit.svg"
-                        onClick = {() => props.ops.editStep(props.id)}
+                        onClick = {() => props.ops.toggleStep(props.id)}
                     />
                 </icon-l>
                 <icon-l>
                     <ReactSVG
                         style="font-size: 2em"
                         src="../assets/icons/delete.svg"
+                        onClick = {() => props.ops.deleteStep(props.id)}
                     />
                 </icon-l>
                 <icon-l>

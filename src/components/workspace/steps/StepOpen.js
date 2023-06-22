@@ -4,12 +4,24 @@ export default function StepOpen(props) {
     let headerClass = "step-entry:open";
     let buttonGroup = [
         <button class="step-button-clear">Clear</button>,
-        <button class="step-button-add">Done</button>,
+        <button
+            class="step-button-add"
+            onClick={() => props.ops.toggleStep(props.id)}
+        >
+            Done
+        </button>,
     ];
 
     if (props.status === "edit") {
         headerClass += " step-entry:closed";
-        buttonGroup.push(<button class="step-button-delete">Delete</button>);
+        buttonGroup.push(
+            <button
+                class="step-button-delete"
+                onClick={() => props.ops.deleteStep(props.id)}
+            >
+                Delete
+            </button>
+        );
     }
 
     return (
