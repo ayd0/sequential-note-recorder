@@ -1,12 +1,52 @@
 import { ReactSVG } from "react-svg";
+import { useSignal } from "@preact/signals";
 
 export default function StepOpen(props) {
     let headerClass = "step-entry:open";
+
+    const localState = [
+        {
+            placeholder: "Write text here...",
+            textValue: useSignal(props.text),
+        },
+        {
+            placeholder: "Write code here...",
+            textValue: useSignal(props.code),
+        },
+        {
+            placeholder: "Enter links here...",
+            textValue: useSignal(props.links),
+        },
+    ];
+
+    const stateIdx = useSignal(0);
+
+    const placeholder = useSignal(localState[stateIdx.value].placeholder);
+    let tempTextValue = localState[stateIdx.value].textValue.value;
+
+    const setTextValue = () => {
+        // this significantly reduces re-renders
+        localState[stateIdx.value].textValue.value = tempTextValue;
+    };
+
+    const updateTextarea = (idx) => {
+        setTextValue();
+        stateIdx.value = idx;
+        placeholder.value = localState[stateIdx.value].placeholder;
+    };
+
     let buttonGroup = [
         <button class="step-button-clear">Clear</button>,
         <button
             class="step-button-add"
-            onClick={() => props.ops.toggleStep(props._id)}
+            onClick={() => {
+                setTextValue();
+                props.ops.toggleStep(props._id, {
+                    text: localState[0].textValue.value,
+                    code: localState[1].textValue.value,
+                    links: localState[2].textValue.value,
+                });
+            }}
         >
             Done
         </button>,
@@ -37,18 +77,21 @@ export default function StepOpen(props) {
                         <ReactSVG
                             style="font-size: 2.5em; opacity: 50%;"
                             src="../assets/icons/add-comment.svg"
+                            onClick={() => updateTextarea(0)}
                         />
                     </icon-l>
                     <icon-l>
                         <ReactSVG
                             style="font-size: 2.5em"
                             src="../assets/icons/code-block.svg"
+                            onClick={() => updateTextarea(1)}
                         />
                     </icon-l>
                     <icon-l>
                         <ReactSVG
                             style="font-size: 2.5em; opacity: 50%;"
                             src="../assets/icons/add-link.svg"
+                            onClick={() => updateTextarea(2)}
                         />
                     </icon-l>
                 </p>
@@ -58,8 +101,11 @@ export default function StepOpen(props) {
             </switcher-l>
             <textarea
                 class="step-input"
-                placeholder="Write code here..."
-                value={props.code}
+                placeholder={placeholder.value}
+                value={tempTextValue}
+                onInput={(e) => {
+                    tempTextValue = e.target.value;
+                }}
             ></textarea>
         </div>
     );

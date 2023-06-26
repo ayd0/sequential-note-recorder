@@ -5,7 +5,7 @@ import config from "../../../../config";
 
 const stepUrl = `${config.baseUrl}/step/`;
 
-const getStep = async (stepName) => {
+const postStep = async (stepName) => {
     let step = await fetch(stepUrl, {
         method: "POST",
         headers: {
@@ -30,22 +30,45 @@ const createStep = async (stepName, stepList) => {
         }
     }
 
-    const step = await getStep(stepName)
+    const step = await postStep(stepName)
         .then((step) => (step = { ...step, component: signal(<StepOpen />) }))
         .catch((err) => console.error(err));
 
     return step;
 };
 
-const updateStep = () => {}; // TODO: Handle saving form data
+const updateStep = async (step, altProps) => {
+    step.text = altProps.text;
+    step.code = altProps.code;
+    step.links = altProps.links;
 
-const toggleEditStep = (stepId, stepList) => {
+    await fetch(stepUrl + step._id, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(step),
+    })
+        .then((response) => response.json())
+        .then((response) => (step = response))
+        .catch((err) => console.error(err));
+};
+
+const toggleEditStep = (stepId, altProps, stepList) => {
     const step = stepList.value.find((step) => step._id === stepId);
-    console.log(stepList.value);
     if (step.status !== "closed") {
         step.status = "closed";
         step.component.value = <StepClosed />;
-        updateStep();
+
+        if (
+            step.text !== altProps.text ||
+            step.code !== altProps.code ||
+            step.links !== altProps.links
+        ) {
+            updateStep(step, altProps);
+        }
+
     } else {
         step.status = "edit";
         step.component.value = <StepOpen />;
@@ -54,15 +77,21 @@ const toggleEditStep = (stepId, stepList) => {
 
 // TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
 // issue: deleting matching named steps will remove newly created step
-const removeStep = (stepId, stepList) => {
-    const updatedStepList = stepList.value.slice();
-    updatedStepList.splice(
-        stepList.value.indexOf(
-            stepList.value.find((step) => step._id === stepId)
-        ),
-        1
-    );
-    stepList.value = updatedStepList; // have to assign value directly to trigger rerender, splice will not trigger
+const removeStep = async (stepId, stepList) => {
+    await fetch(`${stepUrl}${stepId}`, {
+        method: "DELETE",
+    })
+        .then(() => {
+            const updatedStepList = stepList.value.slice();
+            updatedStepList.splice(
+                stepList.value.indexOf(
+                    stepList.value.find((step) => step._id === stepId)
+                ),
+                1
+            );
+            stepList.value = updatedStepList; // have to assign value directly to trigger rerender, splice will not trigger
+        })
+        .catch((err) => console.error(err));
 };
 
 const createStepsState = () => {
@@ -75,7 +104,8 @@ const createStepsState = () => {
             .catch((err) => console.error(err));
     };
 
-    const toggleStep = (stepId) => toggleEditStep(stepId, stepList);
+    const toggleStep = (stepId, altProps) =>
+        toggleEditStep(stepId, altProps, stepList);
     const deleteStep = (stepId) => removeStep(stepId, stepList);
 
     return { stepList, numSteps, addStep, toggleStep, deleteStep };

@@ -43,9 +43,8 @@ export default class Steps extends Component {
                     {stepList.value
                         .slice()
                         .reverse()
-                        .map((step, index) => { // TODO: once server integrated, deconstruct step and add ops
+                        .map((step, index) => { 
                             step.component.value.props = { ...step, ops: stepOperations };
-                            console.log(step.component.value.props);
                             return step.component.value;
                         })}
                 </>

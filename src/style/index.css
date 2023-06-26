@@ -190,6 +190,10 @@ icon-l svg {
 	padding-block: 0;
 }
 
+.opacity\:half {
+	opacity: 50%;
+}
+
 .narrow-input {
 	height: var(--input-height-narrow);
 	border: none;
