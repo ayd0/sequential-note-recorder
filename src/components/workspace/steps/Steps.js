@@ -1,12 +1,12 @@
 import { Component } from "preact";
 import { ReactSVG } from "react-svg";
-import { signal } from "@preact/signals";
 
 export default class Steps extends Component {
     stepName = "";
 
     render(steps) {
-        const { stepList, numSteps, addStep, toggleStep, deleteStep } = steps.state;
+        const { stepList, numSteps, addStep, toggleStep, deleteStep } =
+            steps.state;
         const stepOperations = {
             toggleStep,
             deleteStep,
@@ -32,7 +32,9 @@ export default class Steps extends Component {
                                     this.stepName || `Step ${numSteps.value}`
                                 );
                                 this.stepName = "";
-                                document.querySelector('#step-name-input').value = "";
+                                document.querySelector(
+                                    "#step-name-input"
+                                ).value = "";
                             }}
                         />
                     </div>
@@ -41,7 +43,7 @@ export default class Steps extends Component {
                     {stepList.value
                         .slice()
                         .reverse()
-                        .map((step, index) => {
+                        .map((step, index) => { // TODO: once server integrated, deconstruct step and add ops
                             step.component.value.props = {
                                 id: stepList.value.length - index - 1,
                                 ops: stepOperations,
