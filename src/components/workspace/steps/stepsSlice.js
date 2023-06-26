@@ -30,14 +30,17 @@ const createStep = async (stepName, stepList) => {
         }
     }
 
-    const step = {...(await getStep(stepName)), component: signal(<StepOpen />)};
+    const step = await getStep(stepName)
+        .then((step) => (step = { ...step, component: signal(<StepOpen />) }))
+        .catch((err) => console.error(err));
+
     return step;
 };
 
 const updateStep = () => {}; // TODO: Handle saving form data
 
 const toggleEditStep = (stepId, stepList) => {
-    const step = stepList.value.find((step) => step.id === stepId);
+    const step = stepList.value.find((step) => step._id === stepId);
     console.log(stepList.value);
     if (step.status !== "closed") {
         step.status = "closed";
@@ -55,7 +58,7 @@ const removeStep = (stepId, stepList) => {
     const updatedStepList = stepList.value.slice();
     updatedStepList.splice(
         stepList.value.indexOf(
-            stepList.value.find((step) => step.id === stepId)
+            stepList.value.find((step) => step._id === stepId)
         ),
         1
     );
@@ -66,8 +69,12 @@ const createStepsState = () => {
     const stepList = signal([]);
     const numSteps = computed(() => stepList.value.length + 1);
 
-    const addStep = async (stepName) =>
-        (stepList.value = [...stepList.value, createStep(stepName, stepList)]);
+    const addStep = async (stepName) => {
+        const step = await createStep(stepName, stepList)
+            .then((step) => (stepList.value = [...stepList.value, step]))
+            .catch((err) => console.error(err));
+    };
+
     const toggleStep = (stepId) => toggleEditStep(stepId, stepList);
     const deleteStep = (stepId) => removeStep(stepId, stepList);
 

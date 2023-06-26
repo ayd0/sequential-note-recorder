@@ -6,7 +6,7 @@ export default function StepOpen(props) {
         <button class="step-button-clear">Clear</button>,
         <button
             class="step-button-add"
-            onClick={() => props.ops.toggleStep(props.id)}
+            onClick={() => props.ops.toggleStep(props._id)}
         >
             Done
         </button>,
@@ -17,7 +17,7 @@ export default function StepOpen(props) {
         buttonGroup.push(
             <button
                 class="step-button-delete"
-                onClick={() => props.ops.deleteStep(props.id)}
+                onClick={() => props.ops.deleteStep(props._id)}
             >
                 Delete
             </button>
