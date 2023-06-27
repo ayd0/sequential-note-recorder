@@ -3,6 +3,7 @@ import { useSignal } from "@preact/signals";
 
 export default function StepOpen(props) {
     let headerClass = "step-entry:open";
+    let textAreaId = `TA${props._id}`;
 
     const localState = [
         {
@@ -46,7 +47,16 @@ export default function StepOpen(props) {
     };
 
     let buttonGroup = [
-        <button class="step-button-clear">Clear</button>,
+        <button
+            class="step-button-clear"
+            onClick={() => {
+                document.querySelector(`#${textAreaId}`).value = "";
+                tempTextValue = "";
+                setTextValue();
+            }}
+        >
+            Clear
+        </button>,
         <button
             class="step-button-add"
             onClick={() => {
@@ -113,6 +123,7 @@ export default function StepOpen(props) {
                 </div>
             </switcher-l>
             <textarea
+                id={textAreaId}
                 class="step-input"
                 placeholder={placeholder.value}
                 value={tempTextValue}
