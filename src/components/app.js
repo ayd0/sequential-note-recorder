@@ -5,7 +5,7 @@ import {} from "./web-components/layout-components";
 
 import Navbar from "./workspace/Navbar";
 import NavDrawer from "./workspace/NavDrawer";
-import Timer from "./workspace/Timer";
+import Timer from "./workspace/timer/Timer";
 import Steps from "./workspace/steps/Steps";
 import Session from "./workspace/Session";
 import Chart from "./workspace/Chart";

@@ -24,14 +24,24 @@ export default function StepOpen(props) {
     const placeholder = useSignal(localState[stateIdx.value].placeholder);
     let tempTextValue = localState[stateIdx.value].textValue.value;
 
+    const iconStyles = useSignal(["", "opacity:half", "opacity:half"]);
+
     const setTextValue = () => {
-        // this significantly reduces re-renders
         localState[stateIdx.value].textValue.value = tempTextValue;
+    };
+
+    const updateIconStyles = () => {
+        for (let i = 0; i < iconStyles.value.length; ++i) {
+            i === stateIdx.value
+                ? (iconStyles.value[i] = "")
+                : (iconStyles.value[i] = "opacity:half");
+        }
     };
 
     const updateTextarea = (idx) => {
         setTextValue();
         stateIdx.value = idx;
+        updateIconStyles();
         placeholder.value = localState[stateIdx.value].placeholder;
     };
 
@@ -75,13 +85,15 @@ export default function StepOpen(props) {
                     {props.name}
                     <icon-l style="margin-inline-start: var(--s2); padding-block-start: var(--s-5);">
                         <ReactSVG
-                            style="font-size: 2.5em; opacity: 50%;"
+                            class={iconStyles.value[0]}
+                            style="font-size: 2.5em;"
                             src="../assets/icons/add-comment.svg"
                             onClick={() => updateTextarea(0)}
                         />
                     </icon-l>
                     <icon-l>
                         <ReactSVG
+                            class={iconStyles.value[1]}
                             style="font-size: 2.5em"
                             src="../assets/icons/code-block.svg"
                             onClick={() => updateTextarea(1)}
@@ -89,7 +101,8 @@ export default function StepOpen(props) {
                     </icon-l>
                     <icon-l>
                         <ReactSVG
-                            style="font-size: 2.5em; opacity: 50%;"
+                            class={iconStyles.value[2]}
+                            style="font-size: 2.5em;"
                             src="../assets/icons/add-link.svg"
                             onClick={() => updateTextarea(2)}
                         />
