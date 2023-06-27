@@ -44,9 +44,9 @@ export default class App extends Component {
                                     <Session />
                                     <Chart />
                                 </stack-l>
-                                <Steps state={this.state.steps} />
+                                <Steps state={this.state.steps} shared={{timer: this.state.timer}} />
                             </sidebar-l>
-                            <Timer />
+                            <Timer state={this.state.timer} />
                         </sidebar-l>
                     </div>
                 </sidebar-l>

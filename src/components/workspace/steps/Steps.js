@@ -4,13 +4,17 @@ import { ReactSVG } from "react-svg";
 export default class Steps extends Component {
     stepName = "";
 
-    render(steps) {
+    render(steps, shared) {
+        // steps state
         const { stepList, numSteps, addStep, toggleStep, deleteStep } =
             steps.state;
         const stepOperations = {
             toggleStep,
             deleteStep,
         };
+
+        // shared state
+        const timer = shared.timer;
 
         return (
             <box-l id="step-container" padBlock="0" padding="0">
