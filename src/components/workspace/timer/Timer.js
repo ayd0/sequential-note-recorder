@@ -4,10 +4,12 @@ import { useSignal } from "@preact/signals";
 
 export default class Timer extends Component {
     render(timer) {
+        // timer state
+        const {timerList, time, addTime, renderTimer} = timer.state;
+
         // local state
         const isRunning = useSignal(false);
-        const time = useSignal(0);
-        const timerInterval = useSignal(null);
+        const timeInterval = useSignal(null);
         
         const setTimer = (value) => {
             value !== undefined 
@@ -15,22 +17,17 @@ export default class Timer extends Component {
                 : isRunning.value = !isRunning.value;
 
             if (isRunning.value) {
-                timerInterval.value = setInterval(() => ++time.value, 1000);
+                timeInterval.value = setInterval(() => ++time.value, 1000);
             } else {
-                clearInterval(timerInterval.value);
+                clearInterval(timeInterval.value);
             }
         }
 
         const reset = () => {
-            setTimer(false);
-        }
-
-        const renderTimer = () => {
-            let seconds = time.value % 60;
-            let minutes = Math.floor(time.value / 60);
-            seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-            minutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-            return `${minutes}:${seconds}`
+            addTime(time.value);
+            time.value = 0;
+            console.log(timerList.value)
+            if (!isRunning.value) setTimer();
         }
 
         return (

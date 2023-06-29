@@ -5,14 +5,14 @@ import config from "../../../../config";
 
 const stepUrl = `${config.baseUrl}/step/`;
 
-const postStep = async (stepName) => {
+const postStep = async (stepName, time) => {
     let step = await fetch(stepUrl, {
         method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: stepName }),
+        body: JSON.stringify({ name: stepName, time: time }),
     })
         .then((response) => response.json())
         .then((response) => (step = response))
@@ -21,7 +21,7 @@ const postStep = async (stepName) => {
     return step;
 };
 
-const createStep = async (stepName, stepList) => {
+const createStep = async (stepName, time, stepList) => {
     if (stepList.value.length > 0) {
         let step = stepList.value[stepList.value.length - 1];
         if (step.status === "open") {
@@ -30,7 +30,7 @@ const createStep = async (stepName, stepList) => {
         }
     }
 
-    const step = await postStep(stepName)
+    const step = await postStep(stepName, time)
         .then((step) => (step = { ...step, component: signal(<StepOpen />) }))
         .catch((err) => console.error(err));
 
@@ -98,8 +98,8 @@ const createStepsState = () => {
     const stepList = signal([]);
     const numSteps = computed(() => stepList.value.length + 1);
 
-    const addStep = async (stepName) => {
-        const step = await createStep(stepName, stepList)
+    const addStep = async (stepName, time) => {
+        const step = await createStep(stepName, time, stepList)
             .then((step) => (stepList.value = [...stepList.value, step]))
             .catch((err) => console.error(err));
     };

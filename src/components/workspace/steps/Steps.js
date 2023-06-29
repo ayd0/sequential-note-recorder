@@ -4,17 +4,22 @@ import { ReactSVG } from "react-svg";
 export default class Steps extends Component {
     stepName = "";
 
-    render(steps, shared) {
+    render(steps) {
         // steps state
         const { stepList, numSteps, addStep, toggleStep, deleteStep } =
             steps.state;
+
+        // shared state
+       const renderTimer = steps.shared.timer.renderTimer;
+       const time = steps.shared.timer.time;
+
+        // localstate
         const stepOperations = {
             toggleStep,
             deleteStep,
+            renderTimer
         };
 
-        // shared state
-        const timer = shared.timer;
 
         return (
             <box-l id="step-container" padBlock="0" padding="0">
@@ -33,7 +38,8 @@ export default class Steps extends Component {
                             src="../assets/icons/next-step.svg"
                             onClick={() => {
                                 addStep(
-                                    this.stepName || `Step ${numSteps.value}`
+                                    this.stepName || `Step ${numSteps.value}`,
+                                    time.value
                                 );
                                 this.stepName = "";
                                 document.querySelector(
