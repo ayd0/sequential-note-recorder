@@ -3,15 +3,16 @@ import { ReactSVG } from "react-svg";
 import { useSignal } from "@preact/signals";
 
 export default class Timer extends Component {
+    // TODO: add modifiable timer status properties (sequence, min, max, buffer) and add buttons to interface
     render(timer) {
         // timer state
-        const {timerList, time, addTime, renderTimer} = timer.state;
+        const {timerId, timerList, time, addTime, renderTimer} = timer.state;
 
         // local state
         const isRunning = useSignal(false);
         const timeInterval = useSignal(null);
         
-        const setTimer = (value) => {
+        const toggleTimer = (value) => {
             value !== undefined 
                 ? isRunning.value = value
                 : isRunning.value = !isRunning.value;
@@ -25,9 +26,10 @@ export default class Timer extends Component {
 
         const reset = () => {
             addTime(time.value);
-            time.value = 0;
             console.log(timerList.value)
-            if (!isRunning.value) setTimer();
+            time.value = 0;
+            if (!isRunning.value) toggleTimer();
+            console.log(timerId.value)
         }
 
         return (
@@ -46,7 +48,7 @@ export default class Timer extends Component {
                                     <ReactSVG
                                         style="font-size: 2.4em; padding-inline-start: var(--s-3); padding-block-start: var(--s-3);"
                                         src="../assets/icons/timer.svg"
-                                        onClick={() => setTimer()}
+                                        onClick={() => toggleTimer()}
                                     />
                                 </icon-l>
                                 <icon-l>
