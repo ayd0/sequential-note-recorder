@@ -5,8 +5,6 @@ export default function StepOpen(props) {
     let headerClass = "step-entry:open";
     let textAreaId = `TA${props._id}`;
 
-    console.log(props.ops.renderTimer(props.time));
-
     const localState = [
         {
             placeholder: "Write text here...",

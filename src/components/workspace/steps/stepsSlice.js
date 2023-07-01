@@ -14,7 +14,10 @@ const postStep = async (stepName, time) => {
         },
         body: JSON.stringify({ name: stepName, time: time }),
     })
-        .then((response) => response.json())
+        .then((response) => {
+            console.log(response.status);
+            return response.json()
+        })
         .then((response) => (step = response))
         .catch((err) => console.error(err));
 
@@ -99,7 +102,7 @@ const createStepsState = () => {
     const numSteps = computed(() => stepList.value.length + 1);
 
     const addStep = async (stepName, time) => {
-        const step = await createStep(stepName, time, stepList)
+        await createStep(stepName, time, stepList)
             .then((step) => (stepList.value = [...stepList.value, step]))
             .catch((err) => console.error(err));
     };
