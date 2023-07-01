@@ -97,9 +97,10 @@ const removeStep = async (stepId, stepList) => {
         .catch((err) => console.error(err));
 };
 
-const createStepsState = () => {
+const createStepsState = (requestCache) => {
     const stepList = signal([]);
     const numSteps = computed(() => stepList.value.length + 1);
+    console.log(requestCache.value);
 
     const addStep = async (stepName, time) => {
         await createStep(stepName, time, stepList)
