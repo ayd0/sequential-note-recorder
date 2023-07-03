@@ -51,6 +51,7 @@ const postStep = async (stepName, time, stepList) => {
     request.try(true);
 };
 
+// TK: delete when putStep is fixed
 const updateStep = async (step, altProps) => {
     step.text = altProps.text;
     step.code = altProps.code;
@@ -69,18 +70,53 @@ const updateStep = async (step, altProps) => {
         .catch((err) => console.error(err));
 };
 
+// TK: This is broken but I'm too tired to fix it right now
+const putStep = (step, altProps) => {
+    step.text = altProps.text;
+    step.code = altProps.code;
+    step.links = altProps.links;
+
+    const request = {
+        try: (initial) =>
+            fetch(stepUrl + step._id, {
+                method: "PUT",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(step),
+            })
+                .then((response) => {
+                    if (initial) {
+                        step.status = "closed";
+                        step.component = <StepClosed />;
+                    } else {
+                        return response;
+                    }
+                })
+                .catch(() => {
+                    if (initial) requestCache.cacheRequest(request);
+                }),
+        resolve: () => {
+            step.status = "closed";
+            step.component = <StepClosed />;
+        },
+    };
+};
+
 const toggleEditStep = (stepId, altProps, stepList) => {
     const step = stepList.value.find((step) => step._id === stepId);
     if (step.status !== "closed") {
-        step.status = "closed";
-        step.component.value = <StepClosed />;
-
         if (
             step.text !== altProps.text ||
             step.code !== altProps.code ||
             step.links !== altProps.links
         ) {
+            // TK: replace with putStep() for testing
             updateStep(step, altProps);
+        } else {
+            step.status = "closed";
+            step.component.value = <StepClosed />;
         }
     } else {
         step.status = "edit";
@@ -100,6 +136,7 @@ const removeStepState = (stepId, stepList) => {
 };
 
 // TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
+// NOTE: This should actually be applied to everything now that caching is integrated
 const removeStep = (stepId, stepList) => {
     const request = {
         try: (initial) =>
