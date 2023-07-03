@@ -2,26 +2,12 @@ import { signal, computed } from "@preact/signals";
 import StepOpen from "./StepOpen";
 import StepClosed from "./StepClosed";
 import config from "../../../../config";
+import createRequestCache from "../../../utilities/requestCache";
 
 const stepUrl = `${config.baseUrl}/step/`;
+const requestCache = createRequestCache();
 
-const postStep = async (stepName, time) => {
-    let step = await fetch(stepUrl, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: stepName, time: time }),
-    })
-        .then((response) => response.json())
-        .then((response) => (step = response))
-        .catch((err) => console.error(err));
-
-    return step;
-};
-
-const createStep = async (stepName, time, stepList) => {
+const createStepState = (step, stepList) => {
     if (stepList.value.length > 0) {
         let step = stepList.value[stepList.value.length - 1];
         if (step.status === "open") {
@@ -30,11 +16,38 @@ const createStep = async (stepName, time, stepList) => {
         }
     }
 
-    const step = await postStep(stepName, time)
-        .then((step) => (step = { ...step, component: signal(<StepOpen />) }))
-        .catch((err) => console.error(err));
+    step = { ...step, component: signal(<StepOpen />) };
+    stepList.value = [...stepList.value, step];
+};
 
-    return step;
+const postStep = async (stepName, time, stepList) => {
+    const request = {
+        try: (initial) =>
+            fetch(stepUrl, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: stepName, time: time }),
+            })
+                .then((step) => {
+                    if (initial) {
+                        step.json().then((step) =>
+                            createStepState(step, stepList)
+                        );
+                    } else {
+                        return step;
+                    }
+                })
+                .catch(() => {
+                    if (initial) requestCache.cacheRequest(request);
+                }),
+        resolve: (step) =>
+            step.json().then((step) => createStepState(step, stepList)),
+    };
+
+    return request.try(true);
 };
 
 const updateStep = async (step, altProps) => {
@@ -68,7 +81,6 @@ const toggleEditStep = (stepId, altProps, stepList) => {
         ) {
             updateStep(step, altProps);
         }
-
     } else {
         step.status = "edit";
         step.component.value = <StepOpen />;
@@ -76,14 +88,13 @@ const toggleEditStep = (stepId, altProps, stepList) => {
 };
 
 // TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
-// issue: deleting matching named steps will remove newly created step
 const removeStep = async (stepId, stepList) => {
     await fetch(`${stepUrl}${stepId}`, {
         method: "DELETE",
     })
         .then((response) => {
             if (!response.status || response.status !== 200) {
-                console.log('fucked');
+                console.log("hangup");
             }
             const updatedStepList = stepList.value.slice();
             updatedStepList.splice(
@@ -95,7 +106,7 @@ const removeStep = async (stepId, stepList) => {
             stepList.value = updatedStepList; // have to assign value directly to trigger rerender, splice will not trigger
         })
         .catch((err) => {
-            console.error(err)
+            console.error(err);
         });
 };
 
@@ -103,14 +114,11 @@ const createStepsState = () => {
     const stepList = signal([]);
     const numSteps = computed(() => stepList.value.length + 1);
 
-    const addStep = async (stepName, time) => {
-        await createStep(stepName, time, stepList)
-            .then((step) => (stepList.value = [...stepList.value, step]))
-            .catch((err) => console.error(err));
-    };
+    const addStep = (stepName, time) => postStep(stepName, time, stepList);
 
     const toggleStep = (stepId, altProps) =>
         toggleEditStep(stepId, altProps, stepList);
+
     const deleteStep = (stepId) => removeStep(stepId, stepList);
 
     return { stepList, numSteps, addStep, toggleStep, deleteStep };

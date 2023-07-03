@@ -53,7 +53,7 @@ export default class Steps extends Component {
                     {stepList.value
                         .slice()
                         .reverse()
-                        .map((step, index) => { 
+                        .map((step) => { 
                             step.component.value.props = { ...step, ops: stepOperations };
                             return step.component.value;
                         })}

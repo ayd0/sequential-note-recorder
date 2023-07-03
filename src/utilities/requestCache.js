@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals";
 
 const createRequestCache = () => {
-    // request format should have .try() and .resolve() functions to handle fetch requests and state input respectively
+    // request format should have .try(initial) and .resolve(response) functions to handle fetch requests and state input respectively
     const requestCache = [];
     const networkStatusError = signal();
     let iterating = false;
