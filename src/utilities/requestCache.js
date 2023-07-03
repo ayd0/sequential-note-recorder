@@ -4,36 +4,35 @@ const createRequestCache = () => {
     // request format should have .try() and .resolve() functions to handle fetch requests and state input respectively
     const requestCache = [];
     const networkStatusError = signal();
-    let requestInterval;
+    let iterating = false;
+    const intervalLength = 50;
 
-    const iterateCache = () => {
-        for (let i = 0; i < requestCache.length; ++i) {
+    const iterateRequestCache = () => {
+        let requestInterval = 0;
+        for (const request of requestCache) {
             setTimeout(() => {
-                requestCache[i].try().then((response) => {
-                    if (response.status === 200) {
-                        requestCache[i].resolve(response);
-                        requestCache.splice(i, 1);
+                request.try(false).then((response) => {
+                    if (response.status === 200 || response.status === 204) {
+                        request.resolve(response);
+                        requestCache.splice(requestCache.indexOf(request), 1);
                     }
                 });
-            }, 100);
+            }, requestInterval += intervalLength);
         }
 
         if (requestCache.length === 0) {
-            clearInterval(requestInterval);
-            requestInterval = null;
-            networkStatusError.value =
-                "Network error resolved, clearing request cache";
+            iterating = false;
+            console.log("Request Cache Empty");
+        } else {
+           setTimeout(() => iterateRequestCache(), 2000);
         }
     };
 
-    const setRequestInterval = () => setInterval(() => iterateCache(), 5000);
-
     const cacheRequest = (request) => {
         requestCache.push(request);
-        if (!requestInterval) {
-            setRequestInterval();
-            networkStatusError.value =
-                "Network status error, initializing request cache";
+        if (!iterating) {
+            iterating = true;
+            iterateRequestCache();
         }
     };
 

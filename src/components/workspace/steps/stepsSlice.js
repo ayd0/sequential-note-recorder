@@ -14,10 +14,7 @@ const postStep = async (stepName, time) => {
         },
         body: JSON.stringify({ name: stepName, time: time }),
     })
-        .then((response) => {
-            console.log(response.status);
-            return response.json()
-        })
+        .then((response) => response.json())
         .then((response) => (step = response))
         .catch((err) => console.error(err));
 
@@ -84,7 +81,10 @@ const removeStep = async (stepId, stepList) => {
     await fetch(`${stepUrl}${stepId}`, {
         method: "DELETE",
     })
-        .then(() => {
+        .then((response) => {
+            if (!response.status || response.status !== 200) {
+                console.log('fucked');
+            }
             const updatedStepList = stepList.value.slice();
             updatedStepList.splice(
                 stepList.value.indexOf(
@@ -94,13 +94,14 @@ const removeStep = async (stepId, stepList) => {
             );
             stepList.value = updatedStepList; // have to assign value directly to trigger rerender, splice will not trigger
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+            console.error(err)
+        });
 };
 
-const createStepsState = (requestCache) => {
+const createStepsState = () => {
     const stepList = signal([]);
     const numSteps = computed(() => stepList.value.length + 1);
-    console.log(requestCache.value);
 
     const addStep = async (stepName, time) => {
         await createStep(stepName, time, stepList)
