@@ -51,27 +51,7 @@ const postStep = async (stepName, time, stepList) => {
     request.try(true);
 };
 
-// TK: delete when putStep is fixed
-const updateStep = async (step, altProps) => {
-    step.text = altProps.text;
-    step.code = altProps.code;
-    step.links = altProps.links;
-
-    await fetch(stepUrl + step._id, {
-        method: "PUT",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(step),
-    })
-        .then((response) => response.json())
-        .then((response) => (step = response))
-        .catch((err) => console.error(err));
-};
-
-// TK: This is broken but I'm too tired to fix it right now
-const putStep = (step, altProps) => {
+const putStep = (step, altProps, stepList) => {
     step.text = altProps.text;
     step.code = altProps.code;
     step.links = altProps.links;
@@ -84,24 +64,35 @@ const putStep = (step, altProps) => {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(step),
+                body: JSON.stringify({
+                    // must deconstruct to avoid circular JSON issues with signals
+                    text: step.text,
+                    code: step.code,
+                    links: step.links,
+                }),
             })
                 .then((response) => {
                     if (initial) {
                         step.status = "closed";
-                        step.component = <StepClosed />;
+                        step.component.value = <StepClosed />
                     } else {
                         return response;
                     }
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.error(err);
                     if (initial) requestCache.cacheRequest(request);
                 }),
         resolve: () => {
             step.status = "closed";
-            step.component = <StepClosed />;
-        },
+            step.component.value = <StepClosed />;
+        }
     };
+
+    request.try(true).then(() => {
+        step.status = "closed";
+        step.component.value = <StepClosed />;
+    });
 };
 
 const toggleEditStep = (stepId, altProps, stepList) => {
@@ -113,7 +104,7 @@ const toggleEditStep = (stepId, altProps, stepList) => {
             step.links !== altProps.links
         ) {
             // TK: replace with putStep() for testing
-            updateStep(step, altProps);
+            putStep(step, altProps, stepList);
         } else {
             step.status = "closed";
             step.component.value = <StepClosed />;
