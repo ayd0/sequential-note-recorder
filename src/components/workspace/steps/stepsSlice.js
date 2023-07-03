@@ -2,11 +2,9 @@ import { signal, computed } from "@preact/signals";
 import StepOpen from "./StepOpen";
 import StepClosed from "./StepClosed";
 import config from "../../../../config";
-import createRequestCache from "../../../utilities/requestCache";
+import { requestCache } from "../../../store";
 
 const stepUrl = `${config.baseUrl}/step/`;
-// TK: This is a hacky implementation of requestCache. In future, refactor for SSoT
-const requestCache = createRequestCache();
 
 const createStepState = (step, stepList) => {
     if (stepList.value.length > 0) {
@@ -42,7 +40,7 @@ const postStep = async (stepName, time, stepList) => {
                     }
                 })
                 .catch(() => {
-                    if (initial) requestCache.cacheRequest(request);
+                    if (initial) requestCache.value.cacheRequest(request);
                 }),
         resolve: (step) =>
             step.json().then((step) => createStepState(step, stepList)),
@@ -81,7 +79,7 @@ const putStep = (step, altProps) => {
                 })
                 .catch((err) => {
                     console.error(err);
-                    if (initial) requestCache.cacheRequest(request);
+                    if (initial) requestCache.value.cacheRequest(request);
                 }),
         resolve: () => {
             step.status = "closed";
@@ -142,7 +140,7 @@ const removeStep = (stepId, stepList) => {
                     }
                 })
                 .catch(() => {
-                    if (initial) requestCache.cacheRequest(request);
+                    if (initial) requestCache.value.cacheRequest(request);
                 }),
         resolve: () => removeStepState(stepId, stepList),
     };

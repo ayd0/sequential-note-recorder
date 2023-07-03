@@ -3,8 +3,9 @@ import createStepsState from "./components/workspace/steps/stepsSlice";
 import createTimerState from "./components/workspace/timer/timerSlice";
 import createRequestCache from "./utilities/requestCache";
 
+export const requestCache = signal(createRequestCache());
+
 const createStore = () => {
-    const requestCache = signal(createRequestCache());
     return {
         requestCache: requestCache,
         steps: createStepsState(requestCache),
