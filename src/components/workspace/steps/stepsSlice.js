@@ -51,7 +51,7 @@ const postStep = async (stepName, time, stepList) => {
     request.try(true);
 };
 
-const putStep = (step, altProps, stepList) => {
+const putStep = (step, altProps) => {
     step.text = altProps.text;
     step.code = altProps.code;
     step.links = altProps.links;
@@ -104,7 +104,7 @@ const toggleEditStep = (stepId, altProps, stepList) => {
             step.links !== altProps.links
         ) {
             // TK: replace with putStep() for testing
-            putStep(step, altProps, stepList);
+            putStep(step, altProps);
         } else {
             step.status = "closed";
             step.component.value = <StepClosed />;
