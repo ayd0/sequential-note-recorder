@@ -5,6 +5,7 @@ import config from "../../../../config";
 import createRequestCache from "../../../utilities/requestCache";
 
 const stepUrl = `${config.baseUrl}/step/`;
+// TK: This is a hacky implementation of requestCache. In future, refactor for SSoT
 const requestCache = createRequestCache();
 
 const createStepState = (step, stepList) => {
@@ -47,7 +48,7 @@ const postStep = async (stepName, time, stepList) => {
             step.json().then((step) => createStepState(step, stepList)),
     };
 
-    return request.try(true);
+    request.try(true);
 };
 
 const updateStep = async (step, altProps) => {
@@ -87,27 +88,38 @@ const toggleEditStep = (stepId, altProps, stepList) => {
     }
 };
 
+const removeStepState = (stepId, stepList) => {
+    const updatedStepList = stepList.value.slice();
+    updatedStepList.splice(
+        stepList.value.indexOf(
+            stepList.value.find((step) => step._id === stepId)
+        ),
+        1
+    );
+    stepList.value = updatedStepList;
+};
+
 // TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
-const removeStep = async (stepId, stepList) => {
-    await fetch(`${stepUrl}${stepId}`, {
-        method: "DELETE",
-    })
-        .then((response) => {
-            if (!response.status || response.status !== 200) {
-                console.log("hangup");
-            }
-            const updatedStepList = stepList.value.slice();
-            updatedStepList.splice(
-                stepList.value.indexOf(
-                    stepList.value.find((step) => step._id === stepId)
-                ),
-                1
-            );
-            stepList.value = updatedStepList; // have to assign value directly to trigger rerender, splice will not trigger
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+const removeStep = (stepId, stepList) => {
+    const request = {
+        try: (initial) =>
+            fetch(stepUrl + stepId, {
+                method: "DELETE",
+            })
+                .then((response) => {
+                    if (initial) {
+                        removeStepState(stepId, stepList);
+                    } else {
+                        return response;
+                    }
+                })
+                .catch(() => {
+                    if (initial) requestCache.cacheRequest(request);
+                }),
+        resolve: () => removeStepState(stepId, stepList),
+    };
+
+    request.try(true);
 };
 
 const createStepsState = () => {
