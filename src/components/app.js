@@ -14,9 +14,17 @@ import ActionBar from "./workspace/ActionBar";
 export default class App extends Component {
     state = createStore();
 
+    handleNetworkError = () => {
+        if (this.state.requestCache.value.networkStatusError !== "") {
+            let color = this.state.requestCache.value.networkEncounteredError.value ? "red" : "green";
+            return <center-l style={`background-color: ${color}; color: #fff`}>{this.state.requestCache.value.networkStatusError}</center-l>;
+        }
+    };
+
     render() {
         return (
             <div id="app">
+                {this.handleNetworkError()}
                 <Navbar />
                 <sidebar-l contentMin="0%" space="0" class="sidebar-style:main">
                     <div id="nav-drawer-container">
@@ -44,7 +52,10 @@ export default class App extends Component {
                                     <Session />
                                     <Chart />
                                 </stack-l>
-                                <Steps state={this.state.steps} shared={{timer: this.state.timer}} />
+                                <Steps
+                                    state={this.state.steps}
+                                    shared={{ timer: this.state.timer }}
+                                />
                             </sidebar-l>
                             <Timer state={this.state.timer} />
                         </sidebar-l>

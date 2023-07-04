@@ -4,6 +4,8 @@ import StepClosed from "./StepClosed";
 import config from "../../../../config";
 import { requestCache } from "../../../store";
 
+// TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
+
 const stepUrl = `${config.baseUrl}/step/`;
 
 const createStepState = (step, stepList) => {
@@ -54,6 +56,8 @@ const putStep = (step, altProps) => {
     step.code = altProps.code;
     step.links = altProps.links;
 
+    // TODO: pass monitoring function in request for when multiple PUTs are made to the same step._id
+    //       and handle as an exceptional routine in requestCache to delete previous existing requests
     const request = {
         try: (initial) =>
             fetch(stepUrl + step._id, {
@@ -72,7 +76,7 @@ const putStep = (step, altProps) => {
                 .then((response) => {
                     if (initial) {
                         step.status = "closed";
-                        step.component.value = <StepClosed />
+                        step.component.value = <StepClosed />;
                     } else {
                         return response;
                     }
@@ -84,7 +88,7 @@ const putStep = (step, altProps) => {
         resolve: () => {
             step.status = "closed";
             step.component.value = <StepClosed />;
-        }
+        },
     };
 
     request.try(true).then(() => {
@@ -101,7 +105,6 @@ const toggleEditStep = (stepId, altProps, stepList) => {
             step.code !== altProps.code ||
             step.links !== altProps.links
         ) {
-            // TK: replace with putStep() for testing
             putStep(step, altProps);
         } else {
             step.status = "closed";
@@ -124,8 +127,6 @@ const removeStepState = (stepId, stepList) => {
     stepList.value = updatedStepList;
 };
 
-// TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
-// NOTE: This should actually be applied to everything now that caching is integrated
 const removeStep = (stepId, stepList) => {
     const request = {
         try: (initial) =>

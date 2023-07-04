@@ -3,7 +3,9 @@ import { signal } from "@preact/signals";
 const createRequestCache = () => {
     // request format should have .try(initial) and .resolve(response) functions to handle fetch requests and state input respectively
     const requestCache = [];
-    const networkStatusError = signal();
+    const networkEncounteredError = signal(false);
+    const networkStatusError = signal("");
+
     let iterating = false;
     const intervalLength = 50;
 
@@ -22,6 +24,9 @@ const createRequestCache = () => {
 
         if (requestCache.length === 0) {
             iterating = false;
+            networkEncounteredError.value = false;
+            networkStatusError.value = "Network Error Resolved!"
+            setTimeout(() => networkStatusError.value = "", 2000)
             console.log("Request Cache Empty");
         } else {
            setTimeout(() => iterateRequestCache(), 2000);
@@ -32,11 +37,13 @@ const createRequestCache = () => {
         requestCache.push(request);
         if (!iterating) {
             iterating = true;
+            networkEncounteredError.value = true;
+            networkStatusError.value = "Network Error: Attempting to resolve..."
             iterateRequestCache();
         }
     };
 
-    return { cacheRequest, networkStatusError };
+    return { cacheRequest, networkEncounteredError, networkStatusError };
 };
 
 export default createRequestCache;

@@ -1,36 +1,55 @@
 import { Component } from "preact";
 import { ReactSVG } from "react-svg";
 import { useSignal } from "@preact/signals";
+import TimeEntry from "./TimeEntry";
 
 export default class Timer extends Component {
     // TODO: add modifiable timer status properties (sequence, min, max, buffer) and add buttons to interface
     render(timer) {
         // timer state
-        const {timerId, timerList, time, addTime, renderTimer} = timer.state;
+        const {
+            time,
+            timeEntryList,
+            getTimerParams,
+            renderTimer,
+            createTimeEntry,
+        } = timer.state;
 
         // local state
         const isRunning = useSignal(false);
         const timeInterval = useSignal(null);
-        
+        const timerParams = useSignal(getTimerParams(false));
+
+        const timeEntryOperations = {
+            renderTimer: renderTimer,
+        };
+
+        const timeEntryComponents = {
+            plus: <ReactSVG src="../assets/icons/plus.svg" />,
+            minus: <ReactSVG src="../assets/icons/minus.svg" />,
+            plusMinus: <ReactSVG src="../assets/icons/plus-minus.svg" />,
+        };
+
         const toggleTimer = (value) => {
-            value !== undefined 
-                ? isRunning.value = value
-                : isRunning.value = !isRunning.value;
+            value !== undefined
+                ? (isRunning.value = value)
+                : (isRunning.value = !isRunning.value);
 
             if (isRunning.value) {
                 timeInterval.value = setInterval(() => ++time.value, 1000);
             } else {
                 clearInterval(timeInterval.value);
             }
-        }
+        };
 
         const reset = () => {
-            addTime(time.value);
-            console.log(timerList.value)
+            if (time.value > 0) {
+                createTimeEntry(true);
+                console.log(timeEntryList.value);
+            }
             time.value = 0;
             if (!isRunning.value) toggleTimer();
-            console.log(timerId.value)
-        }
+        };
 
         return (
             <box-l id="timer-container">
@@ -70,6 +89,14 @@ export default class Timer extends Component {
                                 2:00
                             </p>
                         </div>
+                        {timeEntryList.value.map((timeEntry) => {
+                            console.log(timeEntryList.value);
+                            timeEntry.component.props = {
+                                ...timeEntry,
+                                ops: timeEntryOperations,
+                                components: timeEntryComponents,
+                            };
+                        })}
                         <p style="display: flex; align-items: center;">
                             Study: 26:00
                             <icon-l style="margin-inline: .2ch; font-size: 2em; fill: green;">

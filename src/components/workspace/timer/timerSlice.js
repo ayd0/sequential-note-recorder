@@ -1,42 +1,21 @@
-import { signal, computed } from "@preact/signals";
+import { signal } from "@preact/signals";
 import config from "../../../../config";
+import TimeEntry from "./TimeEntry";
 
 const timeUrl = `${config.baseUrl}/time/`;
 
-const createTimestamp = (time, status) =>{ 
-    return {
-        time: time,
-        status: status
-    }
-}
-
-// TODO: Finish implementing once server model / routes created
-const createTimer = async () => {
-    let timerId;
-    const timer = await fetch(timeUrl, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then((response) => (timerId = response._id))
-        .catch((err) => console.error(err));
-
-    return timerId;
-}
-
 const createTimerState = () => {
-    const timerId = signal();
-    const timerList = signal([]);
     const time = signal(0);
+    const timeEntryList = signal([]);
 
-    // TODO: Fix timerId assignment
-    const getTimerId = async () =>
-        createTimer()
-            .then((id) => (timerId.value = id))
-            .catch((err) => console.error(err))();
+    const getTimerParams = (overrideParams) => {
+        return {
+            studyLength: overrideParams.studyLength || 1500,
+            breakLength: overrideParams.breakLength || 900,
+            minMaxVal: overrideParams.minMaxVal || 120,
+            bufferVal: overrideParams.bufferVal || 60,
+        };
+    };
 
     const renderTimer = (overrideTime) => {
         const currentTime = overrideTime || time.value;
@@ -48,9 +27,27 @@ const createTimerState = () => {
         return `${minutes}:${seconds}`;
     };
 
-    const addTime = (time, status) => timerList.value.push(createTimestamp(time, status));
+    const createTimeEntry = (regular) => {
+        let status = !regular
+            ? "Paused"
+            : timeEntryList.value.length % 2 === 1
+            ? "Break"
+            : "Study";
 
-    return { timerId, timerList, time, addTime, renderTimer };
-}
+        timeEntryList.value.push({
+            time: time.value,
+            status: status,
+            component: <TimeEntry />
+        });
+    };
+
+    return {
+        time,
+        timeEntryList,
+        getTimerParams,
+        renderTimer,
+        createTimeEntry,
+    };
+};
 
 export default createTimerState;

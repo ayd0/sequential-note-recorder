@@ -20,7 +20,6 @@ export default class Steps extends Component {
             renderTimer
         };
 
-
         return (
             <box-l id="step-container" padBlock="0" padding="0">
                 <div id="step-action-bar">
