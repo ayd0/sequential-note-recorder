@@ -9,6 +9,7 @@ const createTimerState = () => {
     const timeEntryList = signal([]);
 
     const getTimerParams = (overrideParams) => {
+        // TK Dev: Respectively: 1500, 900, 120, 60
         return {
             studyLength: overrideParams.studyLength || 1500,
             breakLength: overrideParams.breakLength || 900,
@@ -39,6 +40,8 @@ const createTimerState = () => {
             status: status,
             component: <TimeEntry />
         });
+
+        console.log(timeEntryList.value)
     };
 
     return {

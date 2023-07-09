@@ -5,6 +5,7 @@ import TimeEntry from "./TimeEntry";
 
 export default class Timer extends Component {
     // TODO: add modifiable timer status properties (sequence, min, max, buffer) and add buttons to interface
+    //       add settings window that brings up modal for min/max/buffer values
     render(timer) {
         // timer state
         const {
@@ -19,12 +20,13 @@ export default class Timer extends Component {
         const isRunning = useSignal(false);
         const timeInterval = useSignal(null);
         const timerParams = useSignal(getTimerParams(false));
+        const status = timeEntryList.value.length % 2 === 0 ? "Study" : "Break";
 
         const timeEntryOperations = {
             renderTimer: renderTimer,
         };
 
-        const timeEntryComponents = {
+        const timeEntryIcons = {
             plus: <ReactSVG src="../assets/icons/plus.svg" />,
             minus: <ReactSVG src="../assets/icons/minus.svg" />,
             plusMinus: <ReactSVG src="../assets/icons/plus-minus.svg" />,
@@ -45,7 +47,6 @@ export default class Timer extends Component {
         const reset = () => {
             if (time.value > 0) {
                 createTimeEntry(true);
-                console.log(timeEntryList.value);
             }
             time.value = 0;
             if (!isRunning.value) toggleTimer();
@@ -62,7 +63,7 @@ export default class Timer extends Component {
                     >
                         <div>
                             <h4 style="display: flex; align-items: center; margin-block: 0;">
-                                Break{" "}
+                                {status}
                                 <icon-l>
                                     <ReactSVG
                                         style="font-size: 2.4em; padding-inline-start: var(--s-3); padding-block-start: var(--s-3);"
@@ -89,41 +90,23 @@ export default class Timer extends Component {
                                 2:00
                             </p>
                         </div>
-                        {timeEntryList.value.map((timeEntry) => {
-                            console.log(timeEntryList.value);
+                        {timeEntryList.value.slice().reverse().map((timeEntry) => {
+                            let targetTime =
+                                timeEntry.status === "study"
+                                    ? timerParams.value.studyLength
+                                    : timerParams.value.breakLength;
+
                             timeEntry.component.props = {
-                                ...timeEntry,
+                                status: timeEntry.status,
+                                time: timeEntry.time,
                                 ops: timeEntryOperations,
-                                components: timeEntryComponents,
+                                icons: timeEntryIcons,
+                                targetTime: targetTime,
+                                minMaxVal: timerParams.value.minMaxVal
                             };
+
+                            return timeEntry.component;
                         })}
-                        <p style="display: flex; align-items: center;">
-                            Study: 26:00
-                            <icon-l style="margin-inline: .2ch; font-size: 2em; fill: green;">
-                                <ReactSVG src="../assets/icons/plus.svg" />
-                            </icon-l>
-                            <span style="border-bottom: 1px solid green">
-                                1:00
-                            </span>
-                        </p>
-                        <p style="display: flex; align-items: center">
-                            Break: 12:00
-                            <icon-l style="margin-inline: .2ch; font-size: 2em; fill: red;">
-                                <ReactSVG src="../assets/icons/minus.svg" />
-                            </icon-l>
-                            <span style="border-bottom: 1px solid red">
-                                3:00
-                            </span>
-                        </p>
-                        <p style="display: flex; align-items: center;">
-                            Study: 22:50
-                            <icon-l style="margin-inline: .2ch; font-size: 2em; fill: orange;">
-                                <ReactSVG src="../assets/icons/minus.svg" />
-                            </icon-l>
-                            <span style="border-bottom: 1px solid orange">
-                                2:10
-                            </span>
-                        </p>
                     </stack-l>
                 </center-l>
             </box-l>
