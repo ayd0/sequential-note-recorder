@@ -9,9 +9,11 @@ const createTimerState = () => {
     const timeEntryList = signal([]);
 
     const getTimerParams = (overrideParams) => {
-        // TK Dev: Respectively: 1500, 900, 120, 60
+        // Dev: Defaults respectively as: 1500, 900, 120, 60
+        // From Timer state, overrideParams should be passed through createTimeEntry's call via a signal
+        // so user can customize values for all session requests.
         return {
-            studyLength: overrideParams.studyLength || 1500,
+            studyLength: overrideParams.studyLength || 5,
             breakLength: overrideParams.breakLength || 900,
             minMaxVal: overrideParams.minMaxVal || 120,
             bufferVal: overrideParams.bufferVal || 60,
@@ -19,7 +21,8 @@ const createTimerState = () => {
     };
 
     const renderTimer = (overrideTime) => {
-        const currentTime = overrideTime || time.value;
+        let currentTime = overrideTime || time.value;
+        if (overrideTime === 0) currentTime = 0;
 
         let seconds = currentTime % 60;
         let minutes = Math.floor(currentTime / 60);
@@ -28,16 +31,26 @@ const createTimerState = () => {
         return `${minutes}:${seconds}`;
     };
 
-    const createTimeEntry = (regular) => {
-        let status = !regular
+    const createTimeEntry = (regular, overrideParams) => {
+        const timerParams = getTimerParams(overrideParams || false);
+
+        const status = !regular
             ? "Paused"
             : timeEntryList.value.length % 2 === 1
             ? "Break"
             : "Study";
+        
+        const targetTime = 
+            status === "Study"
+            ? timerParams.studyLength
+            : timerParams.breakLength;
 
         timeEntryList.value.push({
             time: time.value,
             status: status,
+            targetTime: targetTime,
+            minMaxVal: timerParams.minMaxVal,
+            bufferVal: timerParams.bufferVal,
             component: <TimeEntry />
         });
 

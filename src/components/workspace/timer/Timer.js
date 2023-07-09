@@ -21,6 +21,10 @@ export default class Timer extends Component {
         const timeInterval = useSignal(null);
         const timerParams = useSignal(getTimerParams(false));
         const status = timeEntryList.value.length % 2 === 0 ? "Study" : "Break";
+        const targetTime =
+            status === "Study"
+                ? timerParams.value.studyLength
+                : timerParams.value.breakLength;
 
         const timeEntryOperations = {
             renderTimer: renderTimer,
@@ -46,6 +50,7 @@ export default class Timer extends Component {
 
         const reset = () => {
             if (time.value > 0) {
+                // TODO: Create signal for overrideParams to pass as second argument
                 createTimeEntry(true);
             }
             time.value = 0;
@@ -80,7 +85,7 @@ export default class Timer extends Component {
                                 </icon-l>
                             </h4>
                             <p style="display: flex; align-items: center; margin-block-start: 0;">
-                                {renderTimer()} / 15:00{" "}
+                                {renderTimer()} / {renderTimer(targetTime)}{" "}
                                 <icon-l>
                                     <ReactSVG
                                         style="font-size: 1.6em; padding-inline: var(--s-1); padding-block-start: var(--s-3);"
@@ -90,23 +95,22 @@ export default class Timer extends Component {
                                 2:00
                             </p>
                         </div>
-                        {timeEntryList.value.slice().reverse().map((timeEntry) => {
-                            let targetTime =
-                                timeEntry.status === "study"
-                                    ? timerParams.value.studyLength
-                                    : timerParams.value.breakLength;
+                        {timeEntryList.value
+                            .slice()
+                            .reverse()
+                            .map((timeEntry) => {
+                                timeEntry.component.props = {
+                                    status: timeEntry.status,
+                                    time: timeEntry.time,
+                                    targetTime: timeEntry.targetTime,
+                                    minMaxVal: timeEntry.minMaxVal,
+                                    bufferVal: timeEntry.bufferVal,
+                                    ops: timeEntryOperations,
+                                    icons: timeEntryIcons
+                                };
 
-                            timeEntry.component.props = {
-                                status: timeEntry.status,
-                                time: timeEntry.time,
-                                ops: timeEntryOperations,
-                                icons: timeEntryIcons,
-                                targetTime: targetTime,
-                                minMaxVal: timerParams.value.minMaxVal
-                            };
-
-                            return timeEntry.component;
-                        })}
+                                return timeEntry.component;
+                            })}
                     </stack-l>
                 </center-l>
             </box-l>
