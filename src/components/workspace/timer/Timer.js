@@ -99,12 +99,11 @@ export default class Timer extends Component {
                             .slice()
                             .reverse()
                             .map((timeEntry) => {
+                                const updatedEntry = { ...timeEntry };
+                                delete updatedEntry.component;
+
                                 timeEntry.component.props = {
-                                    status: timeEntry.status,
-                                    time: timeEntry.time,
-                                    targetTime: timeEntry.targetTime,
-                                    minMaxVal: timeEntry.minMaxVal,
-                                    bufferVal: timeEntry.bufferVal,
+                                    ...updatedEntry,
                                     ops: timeEntryOperations,
                                     icons: timeEntryIcons
                                 };
