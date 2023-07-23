@@ -1,5 +1,6 @@
 import { Component } from "preact";
-import SessionCanvas from "./sessionCanvas";
+//@ts-ignore
+import SessionCanvas from "./SessionCanvas";
 
 export default class Session extends Component {
     render() {
