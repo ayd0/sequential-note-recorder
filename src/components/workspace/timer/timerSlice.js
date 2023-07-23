@@ -13,7 +13,7 @@ const createTimerState = () => {
         // From Timer state, overrideParams should be passed through createTimeEntry's call via a signal
         // so user can customize values for all session requests.
         return {
-            studyLength: overrideParams.studyLength || 5,
+            studyLength: overrideParams.studyLength || 1500,
             breakLength: overrideParams.breakLength || 900,
             minMaxVal: overrideParams.minMaxVal || 120,
             bufferVal: overrideParams.bufferVal || 60,

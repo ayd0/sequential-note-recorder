@@ -7,7 +7,7 @@ import Navbar from "./workspace/Navbar";
 import NavDrawer from "./workspace/NavDrawer";
 import Timer from "./workspace/timer/Timer";
 import Steps from "./workspace/steps/Steps";
-import Session from "./workspace/Session";
+import Session from "./workspace/session/session";
 import Chart from "./workspace/Chart";
 import ActionBar from "./workspace/ActionBar";
 
@@ -16,8 +16,15 @@ export default class App extends Component {
 
     handleNetworkError = () => {
         if (this.state.requestCache.value.networkStatusError !== "") {
-            let color = this.state.requestCache.value.networkEncounteredError.value ? "red" : "green";
-            return <center-l style={`background-color: ${color}; color: #fff`}>{this.state.requestCache.value.networkStatusError}</center-l>;
+            let color = this.state.requestCache.value.networkEncounteredError
+                .value
+                ? "red"
+                : "green";
+            return (
+                <center-l style={`background-color: ${color}; color: #fff`}>
+                    {this.state.requestCache.value.networkStatusError}
+                </center-l>
+            );
         }
     };
 
@@ -49,7 +56,7 @@ export default class App extends Component {
                                     space="var(--border-thin)"
                                 >
                                     <ActionBar />
-                                    <Session />
+                                    <Session state={this.state.session} />
                                     <Chart />
                                 </stack-l>
                                 <Steps

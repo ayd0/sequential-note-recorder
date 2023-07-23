@@ -99,13 +99,14 @@ export default class Timer extends Component {
                             .slice()
                             .reverse()
                             .map((timeEntry) => {
+                                // TODO: update to trigger re-render only when timeEntryList.value changes
                                 const updatedEntry = { ...timeEntry };
                                 delete updatedEntry.component;
 
                                 timeEntry.component.props = {
                                     ...updatedEntry,
                                     ops: timeEntryOperations,
-                                    icons: timeEntryIcons
+                                    icons: timeEntryIcons,
                                 };
 
                                 return timeEntry.component;
