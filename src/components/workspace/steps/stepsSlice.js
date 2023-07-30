@@ -5,6 +5,7 @@ import config from "../../../../config";
 import { requestCache } from "../../../store";
 
 // TODO: Handle renumbering steps, get regex for 'Step #' for conditional trigger AND renumber by index value in list + 1
+//       Handle hard resets for session OR subject change
 
 const stepUrl = `${config.baseUrl}/step/`;
 

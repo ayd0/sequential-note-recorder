@@ -3,6 +3,7 @@ import createStepsState from "./components/workspace/steps/stepsSlice";
 import createTimerState from "./components/workspace/timer/timerSlice";
 import createRequestCache from "./utilities/requestCache";
 import createSessionState from "./components/workspace/session/sessionSlice";
+import createSubjectsState from "./components/workspace/subjects/subjectsSlice";
 
 export const requestCache = signal(createRequestCache());
 
@@ -12,6 +13,7 @@ const createStore = () => {
         steps: createStepsState(requestCache),
         timer: createTimerState(),
         session: createSessionState(),
+        subjects: createSubjectsState()
     };
 };
 

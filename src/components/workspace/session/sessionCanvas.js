@@ -1,11 +1,15 @@
 import { useRef, useEffect } from 'preact/hooks';
 import { getModifiers } from './sessionCanvasUtils';
 
+// ==============================================================================
+// TODO: * establish and integrate subject data structure for graph tree handling
+// ----- * establish paradigm for handling server requests and caching graphed data
+// ==============================================================================
+
 export default function SessionCanvas(props) {
     const canvasRef = useRef(null);
 
     const mods = getModifiers();
-    console.log(mods);
 
     useEffect(() => {
         const ctx = canvasRef.current.getContext("2d");

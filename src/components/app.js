@@ -7,9 +7,10 @@ import Navbar from "./workspace/Navbar";
 import NavDrawer from "./workspace/NavDrawer";
 import Timer from "./workspace/timer/Timer";
 import Steps from "./workspace/steps/Steps";
+//@ts-ignore
 import Session from "./workspace/session/session";
 import Chart from "./workspace/Chart";
-import ActionBar from "./workspace/ActionBar";
+import ActionBar from "./workspace/subjects/ActionBar";
 
 export default class App extends Component {
     state = createStore();
@@ -55,7 +56,10 @@ export default class App extends Component {
                                     class="stack-style:widget-container rounded-container"
                                     space="var(--border-thin)"
                                 >
-                                    <ActionBar />
+                                    <ActionBar
+                                        state={this.state.subjects}
+                                        shared={{ timer: this.state.timer }}
+                                    />
                                     <Session state={this.state.session} />
                                     <Chart />
                                 </stack-l>
