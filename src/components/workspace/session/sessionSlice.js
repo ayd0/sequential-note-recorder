@@ -7,6 +7,9 @@ import { signal } from "@preact/signals";
 //             already relational
 //       Get requests to sessions should return ALL populated data
 //       And handle to canvas
+//       *
+//       Need to integrate sessions into UI, either in ActionBar and
+//          force subjects into Steps section, OR as new UI element
 
 const createSessionState = () => {
 }

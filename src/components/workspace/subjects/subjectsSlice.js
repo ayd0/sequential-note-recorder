@@ -5,18 +5,18 @@ import { requestCache } from "../../../store";
 const subjectUrl = `${config.baseUrl}/subject/`;
 
 const getBoxStyles = () => {
-    return ({
-        color: 'color here',
-        font: 'font here'
-    })
-}
+    return {
+        color: "color here",
+        font: "font here",
+    };
+};
 
 const createSubjectState = (subject, subjectList) => {
     subjectList.value.push({
         ...subject,
-        styles: getBoxStyles()
-    })
-}
+        styles: getBoxStyles(),
+    });
+};
 
 const postSubject = async (subjectName, time, subjectList) => {
     const request = {
@@ -44,11 +44,14 @@ const postSubject = async (subjectName, time, subjectList) => {
                 .catch(() => {
                     if (initial) requestCache.value.cacheRequest(request);
                 }),
-        resolve: (subject) =>
+        // resolve is not calling createSubjectState
+        resolve: (subject) => {
+            console.log("in resolve");
             subject
                 .json()
                 .then((subject) => createsubjectState(subject, subjectList))
-                .then(() => console.log(subjectList.value)),
+                .then(() => console.log(subjectList.value));
+        },
     };
 
     request.try(true);
@@ -67,12 +70,12 @@ const putSubject = (subject) => {
                 },
                 body: JSON.stringify({
                     name: subject.name,
-                    steps: subject.steps
+                    steps: subject.steps,
                 }),
             })
                 .then((response) => {
                     if (initial) {
-                        // HANDLE                    
+                        // HANDLE
                     } else {
                         return response;
                     }
@@ -94,11 +97,19 @@ const putSubject = (subject) => {
 // GET requests must handle step data
 
 const createSubjectsState = () => {
-    // { name, time, color }
     const subjectList = signal([]);
-    const addSubject = (subjectName, time) => postSubject(subjectName, time, subjectList);
+    const selectedSubjectIndex = signal(undefined);
 
-    return { subjectList, addSubject };
-}
+    const addSubject = (subjectName, time) => {
+        postSubject(subjectName, time, subjectList);
+        selectedSubjectIndex.value = subjectList.value.length;
+    }
+
+    const selectSubject = (index) => selectedSubjectIndex.value = index;
+    const getSelectedSubject = () => subjectList.value[selectedSubjectIndex.value];
+    const updateSubjectSteps = () => putSubject(subject);
+
+    return { subjectList, addSubject, selectSubject, getSelectedSubject };
+};
 
 export default createSubjectsState;

@@ -4,7 +4,7 @@ import { ReactSVG } from "react-svg";
 export default class ActionBar extends Component {
     render(subjects) {
         // subjects state
-        const { subjectList, addSubject } = subjects.state;
+        const { subjectList, addSubject, selectSubject } = subjects.state;
 
         // shared state
         const time = subjects.shared.timer.time;
